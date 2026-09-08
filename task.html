@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PANDYA EMPIRE - TASK BOARD</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Georgia, serif;
+    background:url("map.png") center center/cover no-repeat fixed;
+    min-height:100vh;
+    color:#FFD36C;
+    overflow:hidden;
+}
+
+/* Dark Overlay */
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.78);
+    z-index:-1;
+}
+
+.container{
+    width:100%;
+    height:100vh;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.back-btn{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    border:3px solid gold;
+    background:#2D1705;
+    color:#FFD36C;
+    font-size:28px;
+    cursor:pointer;
+    box-shadow:0 0 12px gold;
+}
+
+.back-btn:hover{
+    background:#4B2600;
+}
+
+.title-box{
+    flex:1;
+    text-align:center;
+}
+
+.title-box h1{
+    font-size:52px;
+    letter-spacing:5px;
+    color:#FFD36C;
+    text-shadow:0 0 15px gold;
+}
+
+.title-box p{
+    margin-top:5px;
+    color:#FFF3C6;
+    letter-spacing:2px;
+}
+
+/* Coins & Pearls */
+
+.status-box{
+    display:flex;
+    gap:12px;
+}
+
+.status{
+    background:#241406;
+    border:2px solid gold;
+    border-radius:25px;
+    padding:10px 18px;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    box-shadow:0 0 10px rgba(255,215,0,.4);
+}
+
+/* Subtitle */
+
+.subtitle{
+    text-align:center;
+    margin-bottom:25px;
+    padding:12px;
+    border:2px solid gold;
+    border-radius:20px;
+    background:#241406;
+    color:#FFE8A2;
+    font-size:18px;
+}
+
+/* ================= HORIZONTAL TASK SCROLL ================= */
+
+.task-grid{
+    display:flex;
+    gap:25px;
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-behavior:smooth;
+    padding-bottom:20px;
+}
+
+.task-grid::-webkit-scrollbar{
+    height:12px;
+}
+
+.task-grid::-webkit-scrollbar-track{
+    background:#2D1705;
+    border-radius:20px;
+}
+
+.task-grid::-webkit-scrollbar-thumb{
+    background:gold;
+    border-radius:20px;
+}
+
+/* ================= TASK CARD ================= */
+
+.task-card{
+    flex:0 0 280px;
+    width:280px;
+    background:#241406;
+    border:3px solid #D4A94A;
+    border-radius:20px;
+    overflow:hidden;
+    position:relative;
+    cursor:pointer;
+    transition:.3s;
+    box-shadow:0 0 18px rgba(255,215,0,.35);
+}
+
+.task-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 0 25px gold;
+}
+
+.task-banner{
+    background:linear-gradient(to bottom,#5B3210,#2D1705);
+    color:#FFD36C;
+    text-align:center;
+    padding:14px;
+    font-size:22px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.task-image{
+    width:100%;
+    height:190px;
+    object-fit:cover;
+}
+
+/* Lock Icon */
+
+.lock-circle{
+    position:absolute;
+    top:90px;
+    left:50%;
+    transform:translateX(-50%);
+    width:85px;
+    height:85px;
+    border-radius:50%;
+    border:4px solid gold;
+    background:rgba(0,0,0,.88);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:38px;
+    color:white;
+    box-shadow:0 0 12px gold;
+}
+
+/* Place Name */
+
+.task-name{
+    text-align:center;
+    padding-top:15px;
+    font-size:22px;
+    font-weight:bold;
+    color:#FFE08A;
+}
+
+/* Reward Section */
+
+.reward-box{
+    background:#2B1707;
+    border-top:2px solid #D4A94A;
+    padding:12px;
+    text-align:center;
+}
+
+.reward{
+    color:#FFF0C0;
+    font-size:16px;
+    font-weight:bold;
+    margin:4px 0;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    body{
+        overflow:auto;
+    }
+
+    .header{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .title-box h1{
+        font-size:36px;
+    }
+
+    .status-box{
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+
+    .subtitle{
+        font-size:16px;
+    }
+
+    .task-card{
+        flex:0 0 240px;
+        width:240px;
+    }
+
+    .task-image{
+        height:170px;
+    }
+
+    .lock-circle{
+        width:75px;
+        height:75px;
+        top:80px;
+        font-size:32px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <button class="back-btn" onclick="window.location.href='map.html'">⬅</button>
+
+        <div class="title-box">
+            <h1>TASKS</h1>
+            <p>ROYAL MISSION BOARD</p>
+        </div>
+
+        <div class="status-box">
+            <div class="status">🪙 <span id="coins">100</span></div>
+            <div class="status">⚪ <span id="pearls">50</span></div>
+        </div>
+
+    </div>
+
+    <!-- Subtitle -->
+
+    <div class="subtitle">
+        Complete missions to unlock the glory of the Pandya Empire.
+    </div>
+
+    <!-- ================= TASKS ================= -->
+
+    <div class="task-grid">
+
+        <!-- TASK 1 -->
+
+        <div class="task-card" onclick="openTask(1)">
+            <div class="task-banner">TASK 1</div>
+            <img src="palace.jpeg" class="task-image" alt="Palace">
+            <div class="lock-circle">🔒</div>
+
+            <div class="task-name">PALACE</div>
+
+            <div class="reward-box">
+                <div class="reward">🪙 5000 Coins</div>
+                <div class="reward">⚪ 100 Pearls</div>
+            </div>
+        </div>
+
+        <!-- TASK 2 -->
+
+        <div class="task-card" onclick="openTask(2)">
+            <div class="task-banner">TASK 2</div>
+            <img src="temple.jpeg" class="task-image" alt="Temple">
+            <div class="lock-circle">🔒</div>
+
+            <div class="task-name">TEMPLE</div>
+
+            <div class="reward-box">
+                <div class="reward">🪙 6000 Coins</div>
+                <div class="reward">⚪ 100 Pearls</div>
+            </div>
+        </div>
+
+        <!-- TASK 3 -->
+
+        <div class="task-card" onclick="openTask(3)">
+            <div class="task-banner">TASK 3</div>
+            <img src="kalugumalai.jpeg" class="task-image" alt="Kalugu Malai">
+            <div class="lock-circle">🔒</div>
+
+            <div class="task-name">KALUGU MALAI</div>
+
+            <div class="reward-box">
+                <div class="reward">🪙 7500 Coins</div>
+                <div class="reward">⚪ 150 Pearls</div>
+            </div>
+        </div>
+
+        <!-- TASK 4 -->
+
+        <div class="task-card" onclick="openTask(4)">
+            <div class="task-banner">TASK 4</div>
+            <img src="land.jpeg" class="task-image" alt="Land">
+            <div class="lock-circle">🔒</div>
+
+            <div class="task-name">LAND</div>
+
+            <div class="reward-box">
+                <div class="reward">🪙 8000 Coins</div>
+                <div class="reward">⚪ 200 Pearls</div>
+            </div>
+        </div>
+
+        <!-- TASK 5 -->
+
+        <div class="task-card" onclick="openTask(5)">
+            <div class="task-banner">TASK 5</div>
+            <img src="temple.jpeg" class="task-image" alt="Temple">
+            <div class="lock-circle">🔒</div>
+
+            <div class="task-name">TEMPLE</div>
+
+            <div class="reward-box">
+                <div class="reward">🪙 9500 Coins</div>
+                <div class="reward">⚪ 250 Pearls</div>
+            </div>
+        </div>
+
+        <!-- TASK 6 -->
+
+        <div class="task-card" onclick="openTask(6)">
+            <div class="task-banner">TASK 6</div>
+            <img src="padaivalam.jpeg" class="task-image" alt="Padai Valam">
+            <div class="lock-circle">🔒</div>
+
+            <div class="task-name">PADAI VALAM</div>
+
+            <div class="reward-box">
+                <div class="reward">🪙 10000 Coins</div>
+                <div class="reward">⚪ 300 Pearls</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- JavaScript -->
+<script src="task.js"></script>
+
+</body>
+</html>

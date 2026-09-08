@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PANDYA - Empire of Warriors</title>
+
+    <style>
+
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            background: #000;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+
+        /* =========================
+           BACKGROUND IMAGE
+           ========================= */
+
+        .story-page {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+
+            background-image: url("bg2.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+
+        /* =========================
+           BUTTON COMMON STYLE
+           ========================= */
+
+        .story-btn {
+            position: absolute;
+            z-index: 10;
+
+            padding: 11px 22px;
+
+            border: 1px solid #d8ad61;
+            border-radius: 7px;
+
+            background: rgba(35, 18, 8, 0.90);
+
+            color: #f3d58c;
+
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 15px;
+            font-weight: bold;
+
+            letter-spacing: 1px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 3px 10px rgba(0, 0, 0, 0.7),
+                inset 0 0 5px rgba(255, 220, 140, 0.15);
+
+            transition: 0.2s ease;
+        }
+
+
+        /* =========================
+           HOVER EFFECT
+           ========================= */
+
+        .story-btn:hover {
+            background: rgba(90, 48, 18, 0.95);
+            color: #fff1c7;
+
+            transform: scale(1.04);
+        }
+
+
+        .story-btn:active {
+            transform: scale(0.98);
+        }
+
+
+        /* =========================
+           SKIP STORY
+           TOP RIGHT
+           ========================= */
+
+        #skipBtn {
+            top: 18px;
+            right: 22px;
+
+            padding: 10px 18px;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           BACK
+           BOTTOM LEFT
+           ========================= */
+
+        #backBtn {
+            left: 22px;
+            bottom: 20px;
+
+            padding: 11px 22px;
+
+            font-size: 16px;
+        }
+
+
+        /* =========================
+           NEXT
+           BOTTOM RIGHT
+           ========================= */
+
+        #nextBtn {
+            right: 22px;
+            bottom: 20px;
+
+            padding: 11px 24px;
+
+            font-size: 16px;
+        }
+
+
+        /* =========================
+           MOBILE SCREEN
+           ========================= */
+
+        @media (max-width: 600px) {
+
+            #skipBtn {
+                top: 12px;
+                right: 12px;
+
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            #backBtn {
+                left: 12px;
+                bottom: 12px;
+
+                padding: 9px 16px;
+                font-size: 13px;
+            }
+
+            #nextBtn {
+                right: 12px;
+                bottom: 12px;
+
+                padding: 9px 18px;
+                font-size: 13px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         STORY PAGE
+         ========================= -->
+
+    <div class="story-page">
+
+
+        <!-- SKIP STORY BUTTON -->
+
+        <button
+            id="skipBtn"
+            class="story-btn"
+            type="button">
+
+            SKIP STORY
+
+        </button>
+
+
+        <!-- BACK BUTTON -->
+
+        <button
+            id="backBtn"
+            class="story-btn"
+            type="button">
+
+            &#8592; BACK
+
+        </button>
+
+
+        <!-- NEXT BUTTON -->
+
+        <button
+            id="nextBtn"
+            class="story-btn"
+            type="button">
+
+            NEXT &#8594;
+
+        </button>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         JAVASCRIPT
+         ========================= -->
+
+    <script>
+
+        /* --------------------------------
+           BACK BUTTON
+
+           Goes to index.html
+           -------------------------------- */
+
+        document
+            .getElementById("backBtn")
+            .addEventListener("click", function () {
+
+                window.location.href = "index.html";
+
+            });
+
+
+
+        /* --------------------------------
+           NEXT BUTTON
+
+           Goes to entry.html
+           -------------------------------- */
+
+        document
+            .getElementById("nextBtn")
+            .addEventListener("click", function () {
+
+                window.location.href = "start2.html";
+
+            });
+
+
+
+        /* --------------------------------
+           SKIP STORY BUTTON
+
+           Goes to entry.html
+           -------------------------------- */
+
+        document
+            .getElementById("skipBtn")
+            .addEventListener("click", function () {
+
+                window.location.href = "showlevel.html";
+
+            });
+
+    </script>
+
+
+</body>
+
+</html>

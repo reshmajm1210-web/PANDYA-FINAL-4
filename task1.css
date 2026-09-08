@@ -1,0 +1,511 @@
+
+*{ 
+    margin:0; 
+    padding:0; 
+    box-sizing:border-box; 
+} 
+ 
+html,body{ 
+    width:100%; 
+    height:100%; 
+    overflow:hidden; 
+    font-family:Georgia, serif; 
+} 
+ 
+/* ================= BACKGROUND IMAGE ================= */ 
+ 
+body{ 
+    background:url("bg.jpeg") center center/cover no-repeat fixed; 
+} 
+ 
+/* Dark overlay for game look */ 
+ 
+body::before{ 
+    content:""; 
+    position:fixed; 
+    inset:0; 
+    background:rgba(0,0,0,0.28); 
+    z-index:-1; 
+} 
+ 
+/* ================= 3D CANVAS ================= */ 
+ 
+#gameCanvas{ 
+    position:fixed; 
+    inset:0; 
+    width:100%; 
+    height:100%; 
+    display:block; 
+    background:transparent; 
+    z-index:1; 
+} 
+ 
+/* ================= LOADING SCREEN ================= */ 
+ 
+#loadingScreen{ 
+    position:fixed; 
+    inset:0; 
+    background:linear-gradient(to bottom,#130700,#000); 
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    z-index:1000; 
+} 
+ 
+.loading-box{ 
+    width:420px; 
+    max-width:90%; 
+    text-align:center; 
+    background:rgba(25,12,0,.92); 
+    border:3px solid #FFD36C; 
+    border-radius:25px; 
+    padding:30px; 
+    box-shadow:0 0 25px gold; 
+} 
+ 
+.loading-box h1{ 
+    color:#FFD36C; 
+    font-size:42px; 
+    text-shadow:0 0 12px gold; 
+    margin-bottom:10px; 
+} 
+ 
+.loading-box h2{ 
+    color:#FFF3B5; 
+    font-size:22px; 
+    letter-spacing:2px; 
+    margin-bottom:15px; 
+} 
+ 
+.loading-message{ 
+    color:#F9EBC0; 
+    margin-bottom:20px; 
+} 
+ 
+.loading-bar{ 
+    width:100%; 
+    height:18px; 
+    background:#2B1705; 
+    border:2px solid gold; 
+    border-radius:20px; 
+    overflow:hidden; 
+} 
+ 
+#progressBar{ 
+    width:0%; 
+    height:100%; 
+    background:linear-gradient(to right,#8B5A00,#FFD700,#FFF3A5,#FFD700); 
+    transition:width .3s; 
+} 
+ 
+#loadingText{ 
+    margin-top:15px; 
+    color:white; 
+    font-size:16px; 
+} 
+ 
+/* ================= TOP HUD ================= */ 
+ 
+#hud{ 
+    position:fixed; 
+    top:0; 
+    left:0; 
+    width:100%; 
+    padding:18px 30px; 
+    display:flex; 
+    justify-content:space-between; 
+    align-items:center; 
+    background:linear-gradient(to bottom,rgba(0,0,0,.88),transparent); 
+    z-index:10; 
+} 
+ 
+.mission-title{ 
+    color:#FFD36C; 
+    font-size:30px; 
+    font-weight:bold; 
+    text-shadow:0 0 10px gold; 
+} 
+ 
+.hud-right{ 
+    display:flex; 
+    gap:18px; 
+} 
+ 
+.status-card{ 
+    background:rgba(40,20,5,.9); 
+    border:2px solid gold; 
+    border-radius:20px; 
+    padding:10px 18px; 
+    color:#FFE08A; 
+    font-size:18px; 
+    font-weight:bold; 
+    box-shadow:0 0 10px rgba(255,215,0,.5); 
+} 
+ 
+/* ================= OBJECTIVE BOX ================= */ 
+ 
+#objectiveBox{ 
+    position:fixed; 
+    top:100px; 
+    left:25px; 
+    width:340px; 
+    background:rgba(30,15,4,.92); 
+    border:2px solid gold; 
+    border-radius:18px; 
+    padding:18px; 
+    color:white; 
+    z-index:10; 
+    box-shadow:0 0 15px rgba(255,215,0,.35); 
+} 
+ 
+#objectiveBox h3{ 
+    color:#FFD36C; 
+    font-size:20px; 
+    margin-bottom:12px; 
+} 
+ 
+#objectiveBox p{ 
+    color:#FFF2CC; 
+    line-height:1.6; 
+    margin-bottom:15px; 
+} 
+ 
+.reward-info{ 
+    background:#241406; 
+    border:1px solid gold; 
+    border-radius:12px; 
+    padding:12px; 
+} 
+ 
+.reward-info div{ 
+    color:#FFE08A; 
+    margin:8px 0; 
+} 
+ 
+/* ================= BUILD BUTTON ================= */ 
+ 
+#buildPanel{ 
+    position:fixed; 
+    bottom:120px; 
+    left:50%; 
+    transform:translateX(-50%); 
+    z-index:10; 
+} 
+ 
+#buildBtn{ 
+    padding:18px 40px; 
+    border:none; 
+    border-radius:18px; 
+    background:linear-gradient(to bottom,#FFD700,#B97700); 
+    color:#2D1705; 
+    font-size:22px; 
+    font-weight:bold; 
+    cursor:pointer; 
+    box-shadow:0 0 20px gold; 
+    transition:.3s; 
+} 
+ 
+#buildBtn:hover{ 
+    transform:scale(1.08); 
+    box-shadow:0 0 30px gold; 
+} 
+ 
+/* ================= BUILD EFFECT ================= */ 
+ 
+#buildEffect{ 
+    position:fixed; 
+    inset:0; 
+    display:none; 
+    justify-content:center; 
+    align-items:center; 
+    flex-direction:column; 
+    background:rgba(0,0,0,.4); 
+    z-index:15; 
+} 
+ 
+.effect-circle{ 
+    width:180px; 
+    height:180px; 
+    border-radius:50%; 
+    border:8px solid gold; 
+    box-shadow:0 0 50px gold; 
+    animation:pulse 1s infinite; 
+} 
+ 
+#buildEffect p{ 
+    color:#FFD36C; 
+    font-size:24px; 
+    margin-top:25px; 
+    text-shadow:0 0 12px gold; 
+} 
+ 
+@keyframes pulse{ 
+ 
+    0%{ 
+        transform:scale(.8); 
+        opacity:.5; 
+    } 
+ 
+    50%{ 
+        transform:scale(1.15); 
+        opacity:1; 
+    } 
+ 
+    100%{ 
+        transform:scale(.8); 
+        opacity:.5; 
+    } 
+ 
+} 
+ 
+/* ================= BOTTOM BUTTONS ================= */ 
+ 
+#bottomButtons{ 
+    position:fixed; 
+    bottom:20px; 
+    width:100%; 
+    display:flex; 
+    justify-content:center; 
+    gap:20px; 
+    z-index:10; 
+} 
+ 
+.backBtn, 
+.missionBtn{ 
+ 
+    padding:14px 30px; 
+    border:none; 
+    border-radius:14px; 
+    cursor:pointer; 
+    font-size:18px; 
+    font-weight:bold; 
+    transition:.3s; 
+ 
+} 
+ 
+.backBtn{ 
+ 
+    background:#4B2600; 
+    color:white; 
+ 
+} 
+ 
+.backBtn:hover{ 
+ 
+    background:#6B3A00; 
+ 
+} 
+ 
+.missionBtn{ 
+ 
+    background:#FFD700; 
+    color:#2D1705; 
+    display:none; 
+ 
+} 
+ 
+.missionBtn:hover{ 
+ 
+    background:#FFE54D; 
+ 
+} 
+ 
+/* ================= POPUP ================= */ 
+ 
+#missionPopup{ 
+    position:fixed; 
+    inset:0; 
+    display:none; 
+    justify-content:center; 
+    align-items:center; 
+    background:rgba(0,0,0,.75); 
+    z-index:100; 
+} 
+ 
+.popup-box{ 
+    width:420px; 
+    max-width:90%; 
+    background:#241406; 
+    border:3px solid gold; 
+    border-radius:25px; 
+    padding:30px; 
+    text-align:center; 
+    box-shadow:0 0 25px gold; 
+} 
+ 
+.popup-box h2{ 
+    color:#FFD700; 
+    font-size:30px; 
+    margin-bottom:15px; 
+} 
+ 
+.popup-box p{ 
+    color:#FFF2CC; 
+    margin-bottom:20px; 
+    line-height:1.6; 
+} 
+ 
+.reward-box{ 
+    background:#3B1F08; 
+    border:2px solid gold; 
+    border-radius:15px; 
+    padding:15px; 
+    margin-bottom:20px; 
+} 
+ 
+.reward-row{ 
+    color:#FFD36C; 
+    font-size:20px; 
+    margin:10px 0; 
+} 
+ 
+#continueBtn{ 
+    width:100%; 
+    padding:14px; 
+    border:none; 
+    border-radius:14px; 
+    background:#FFD700; 
+    color:#2D1705; 
+    font-size:18px; 
+    font-weight:bold; 
+    cursor:pointer; 
+} 
+ 
+#continueBtn:hover{ 
+    background:#FFE54D; 
+} 
+ 
+/* ================= MOBILE ================= */ 
+ 
+@media(max-width:768px){ 
+ 
+    #hud{ 
+        flex-direction:column; 
+        align-items:flex-start; 
+        gap:10px; 
+    } 
+ 
+    .mission-title{ 
+        font-size:22px; 
+    } 
+ 
+    .hud-right{ 
+        flex-wrap:wrap; 
+        gap:10px; 
+    } 
+ 
+    .status-card{ 
+        font-size:16px; 
+        padding:8px 12px; 
+    } 
+ 
+    #objectiveBox{ 
+        width:90%; 
+        left:5%; 
+        top:110px; 
+        font-size:15px; 
+    } 
+ 
+    #buildBtn{ 
+        width:90vw; 
+        font-size:18px; 
+    } 
+ 
+    #bottomButtons{ 
+        flex-direction:column; 
+        align-items:center; 
+        gap:12px; 
+    } 
+ 
+    .backBtn, 
+    .missionBtn{ 
+        width:90vw; 
+    } 
+ 
+    .popup-box{ 
+        padding:20px; 
+    } 
+ 
+} 
+
+/* ================= NOT ENOUGH COINS & PEARLS POPUP ================= */ 
+
+#fundPopup{ 
+    position:fixed; 
+    inset:0; 
+    display:none; 
+    justify-content:center; 
+    align-items:center; 
+    background:rgba(0,0,0,.78); 
+    z-index:120; 
+} 
+
+.fund-box{ 
+    width:420px; 
+    max-width:90%; 
+    background:#241406; 
+    border:3px solid gold; 
+    border-radius:25px; 
+    padding:30px; 
+    text-align:center; 
+    box-shadow:0 0 25px rgba(255,80,80,.55); 
+} 
+
+.fund-box h2{ 
+    color:#FF6B6B; 
+    font-size:28px; 
+    margin-bottom:15px; 
+    text-shadow:0 0 10px rgba(255,80,80,.5); 
+} 
+
+.fund-message{ 
+    color:#FFF2CC; 
+    margin-bottom:20px; 
+    line-height:1.6; 
+} 
+
+.fund-details{ 
+    background:#3B1F08; 
+    border:2px solid gold; 
+    border-radius:15px; 
+    padding:15px; 
+    margin-bottom:20px; 
+} 
+
+.fund-row{ 
+    color:#FFD36C; 
+    font-size:18px; 
+    margin:10px 0; 
+} 
+
+.fund-row b{ 
+    color:#FFF3B5; 
+} 
+
+#fundOkBtn{ 
+    width:60%; 
+    padding:13px; 
+    border:none; 
+    border-radius:14px; 
+    background:#FFD700; 
+    color:#2D1705; 
+    font-size:18px; 
+    font-weight:bold; 
+    cursor:pointer; 
+} 
+
+#fundOkBtn:hover{ 
+    background:#FFE54D; 
+} 
+
+@media(max-width:768px){ 
+
+    .fund-box{ 
+        padding:20px; 
+    } 
+
+    .fund-row{ 
+        font-size:15px; 
+    } 
+
+}

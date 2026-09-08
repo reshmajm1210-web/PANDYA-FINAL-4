@@ -1,0 +1,342 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Georgia, serif;
+}
+
+/* ================= BACKGROUND ================= */
+
+.map-container{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    background:url("map.png") center center/cover no-repeat;
+}
+
+/* ================= TOP HUD ================= */
+
+#hud{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    padding:15px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    background:linear-gradient(to bottom, rgba(0,0,0,0.92), transparent);
+    z-index:100;
+}
+
+/* ================= PLAYER ================= */
+
+.player{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.king-logo{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid #FFD36C;
+    box-shadow:0 0 12px gold;
+}
+
+.player-text h2{
+    color:#FFD36C;
+    font-size:20px;
+    letter-spacing:1px;
+}
+
+.player-text p{
+    color:#EBCB7A;
+    font-size:12px;
+    letter-spacing:2px;
+}
+
+/* ================= KINGDOM TITLE ================= */
+
+.kingdom-title{
+    position:absolute;
+    top:18px;
+    left:50%;
+    transform:translateX(-50%);
+    color:#FFD36C;
+    font-size:36px;
+    font-weight:bold;
+    letter-spacing:4px;
+    text-shadow:0 0 10px gold;
+    white-space:nowrap;
+}
+
+/* ================= LIVES ================= */
+
+.lives-box{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+}
+
+.live-text{
+    color:#FFD36C;
+    font-size:14px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.hearts{
+    font-size:24px;
+}
+
+/* ================= TASK LOGO ================= */
+
+#taskBtn{
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+}
+
+.task-logo{
+    width:85px;
+    height:85px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #FFD36C;
+    box-shadow:0 0 15px gold;
+    transition:.3s;
+}
+
+#taskBtn span{
+    color:#FFD36C;
+    font-size:16px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+#taskBtn:hover .task-logo{
+    transform:scale(1.1);
+    box-shadow:0 0 25px gold;
+}
+
+/* ================= LEVEL BUTTONS ================= */
+
+.level{
+    position:absolute;
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    border:3px solid #FFD36C;
+    background:#2d1705;
+    color:#FFD36C;
+    font-size:28px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 18px gold;
+    transition:.3s;
+}
+
+.level:hover{
+    transform:scale(1.15);
+}
+
+.label{
+    position:absolute;
+    top:78px;
+    left:50%;
+    transform:translateX(-50%);
+    width:95px;
+    background:rgba(0,0,0,.8);
+    color:#FFD36C;
+    font-size:11px;
+    border-radius:6px;
+    padding:3px;
+}
+
+/* LOCKED LEVEL */
+
+.lock{
+    background:#222;
+    color:#999;
+    border-color:#666;
+    box-shadow:none;
+}
+
+/* UNLOCKED LEVEL */
+
+.unlock{
+    background:#4B2600;
+    animation:glow 2s infinite;
+}
+
+@keyframes glow{
+    0%{box-shadow:0 0 10px gold;}
+    50%{box-shadow:0 0 30px gold;}
+    100%{box-shadow:0 0 10px gold;}
+}
+
+/* ================= LEVEL POSITIONS ================= */
+
+#level1{bottom:55px;left:48%;}
+#level2{bottom:145px;left:41%;}
+#level3{bottom:235px;left:54%;}
+#level4{bottom:330px;left:41%;}
+#level5{bottom:425px;left:54%;}
+#level6{bottom:520px;left:40%;}
+#level7{bottom:605px;left:55%;}
+#level8{top:145px;left:47%;}
+#level9{top:55px;left:49%;}
+
+/* ================= LEVEL POPUP ================= */
+
+#popup{
+    position:absolute;
+    inset:0;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,.65);
+    z-index:500;
+}
+
+.popup-box{
+    width:330px;
+    background:#241406;
+    border:2px solid gold;
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+    color:white;
+    box-shadow:0 0 25px gold;
+}
+
+.popup-box h2{
+    color:#FFD36C;
+    margin-bottom:15px;
+}
+
+.popup-box p{
+    margin-bottom:20px;
+    line-height:1.5;
+}
+
+#enterBtn,
+.closeBtn{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+#enterBtn{
+    background:#FFD36C;
+    color:#241406;
+}
+
+.closeBtn{
+    background:#5B3810;
+    color:white;
+}
+
+/* ================= TASK POPUP ================= */
+
+#taskPopup{
+    position:absolute;
+    inset:0;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,.65);
+    z-index:600;
+}
+
+.task-box{
+    width:330px;
+    background:#241406;
+    border:2px solid gold;
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+    color:white;
+    box-shadow:0 0 25px gold;
+}
+
+.task-box h2{
+    color:#FFD36C;
+    margin-bottom:15px;
+}
+
+.task-box p{
+    color:#FFF4D6;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+.closeTaskBtn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#FFD36C;
+    color:#241406;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.closeTaskBtn:hover{
+    background:#FFC933;
+}
+
+/* ================= MAP WALLET BAR ================= */
+
+.wallet-bar{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:6px;
+}
+
+.wallet-chip{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    min-width:130px;
+    justify-content:center;
+    padding:5px 12px;
+    border-radius:999px;
+    background:linear-gradient(180deg, #25170b, #120a05);
+    border:2px solid #6c491c;
+    box-shadow:inset 0 0 8px rgba(0,0,0,.8);
+}
+
+.wallet-ico{
+    font-size:18px;
+}
+
+.wallet-chip b{
+    font-family:Georgia, serif;
+    color:#ffd257;
+    font-size:18px;
+    text-shadow:1px 1px 2px #000;
+}
+
+.wallet-chip--pearl b{
+    color:#cfe6ff;
+}

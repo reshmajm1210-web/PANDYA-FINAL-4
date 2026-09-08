@@ -1,0 +1,1532 @@
+<!DOCTYPE html>
+<html lang="ta">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Choose Your Warrior</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family:
+                "Noto Serif Tamil",
+                "Latha",
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            background: #120a05;
+            color: #e7c47a;
+        }
+
+
+        /* =========================
+           MAIN BACKGROUND
+        ========================= */
+
+        .game-screen {
+            width: 100%;
+            height: 100vh;
+
+            position: relative;
+
+            background-image:
+                linear-gradient(
+                    rgba(15, 7, 3, 0.30),
+                    rgba(15, 7, 3, 0.58)
+                ),
+                url("bg.jpeg");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            overflow: hidden;
+        }
+
+
+        /* =========================
+           TOP BAR
+        ========================= */
+
+        .top-bar {
+            width: 100%;
+            height: 125px;
+
+            display: flex;
+            align-items: center;
+
+            position: relative;
+            z-index: 10;
+        }
+
+
+        /* BACK BUTTON */
+
+        .back-button {
+            width: 105px;
+            height: 72px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            border: 2px solid #5b3b17;
+
+            border-left: none;
+
+            border-radius: 0 25px 25px 0;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #24160b,
+                    #100903
+                );
+
+            box-shadow:
+                0 0 8px rgba(190, 135, 45, 0.35),
+                inset 0 0 10px rgba(0, 0, 0, 0.8);
+
+            transition: 0.2s;
+        }
+
+        .back-button:hover {
+            transform: translateX(-3px);
+
+            box-shadow:
+                0 0 18px rgba(230, 170, 60, 0.6);
+        }
+
+
+        .back-arrow {
+            color: #d5a755;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 62px;
+
+            line-height: 1;
+
+            transform: translateY(-4px);
+        }
+
+
+        /* TITLE */
+
+        .page-title {
+            height: 72px;
+
+            min-width: 470px;
+
+            margin-left: 0;
+
+            padding: 0 42px;
+
+            display: flex;
+            align-items: center;
+
+            position: relative;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #171008,
+                    #24160b 75%,
+                    #100903
+                );
+
+            border-top: 2px solid #6d481b;
+            border-bottom: 2px solid #6d481b;
+            border-right: 2px solid #6d481b;
+
+            clip-path:
+                polygon(
+                    0 0,
+                    96% 0,
+                    100% 50%,
+                    96% 100%,
+                    0 100%
+                );
+
+            box-shadow:
+                inset 0 0 12px rgba(0, 0, 0, 0.8);
+        }
+
+
+        .page-title span {
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 32px;
+
+            letter-spacing: 1px;
+
+            color: #dcb56d;
+
+            text-shadow:
+                2px 2px 3px #000,
+                0 0 7px rgba(220, 170, 70, 0.35);
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================
+           CENTER LOGO
+        ========================= */
+
+        .center-logo {
+            position: absolute;
+
+            left: 50%;
+            top: 5px;
+
+            transform: translateX(-50%);
+
+            width: 135px;
+            height: 135px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            z-index: 20;
+
+            border-radius: 50%;
+
+            overflow: hidden;
+        }
+
+        .center-logo img {
+            width: 135px;
+            height: 135px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            filter:
+                drop-shadow(
+                    0 0 8px rgba(218, 164, 64, 0.45)
+                );
+        }
+
+
+        /* =========================
+           COINS
+        ========================= */
+
+        .coin-box {
+            position: absolute;
+
+            right: 145px;
+            top: 27px;
+
+            width: 260px;
+            height: 62px;
+
+            display: flex;
+            align-items: center;
+
+            padding-left: 18px;
+
+            border: 2px solid #6c491c;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #25170b,
+                    #120a05
+                );
+
+            box-shadow:
+                inset 0 0 12px rgba(0, 0, 0, 0.85),
+                0 0 10px rgba(180, 125, 35, 0.25);
+        }
+
+
+        .coin-icon {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 27px;
+            font-weight: bold;
+
+            color: #8b5c0d;
+
+            background:
+                radial-gradient(
+                    circle at 35% 30%,
+                    #ffe58b,
+                    #dca52f 50%,
+                    #85570b
+                );
+
+            border: 2px solid #9e6c16;
+
+            box-shadow:
+                inset 0 0 5px #fff0a5,
+                0 0 5px rgba(255, 190, 50, 0.45);
+        }
+
+
+        .coin-value {
+            margin-left: 30px;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 26px;
+
+            color: #e1c27a;
+
+            text-shadow:
+                2px 2px 3px #000;
+        }
+
+
+        /* SETTINGS */
+
+        .settings-button {
+            position: absolute;
+
+            right: 25px;
+            top: 19px;
+
+            width: 85px;
+            height: 85px;
+
+            border-radius: 50%;
+
+            border: 3px solid #604017;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #382512,
+                    #120a05 70%
+                );
+
+            color: #cda45d;
+
+            font-size: 47px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            box-shadow:
+                inset 0 0 12px #000,
+                0 0 10px rgba(190, 135, 45, 0.25);
+
+            transition: 0.2s;
+        }
+
+        .settings-button:hover {
+            transform: rotate(20deg);
+
+            box-shadow:
+                0 0 18px rgba(220, 165, 60, 0.6);
+        }
+
+
+        /* =========================
+           CARDS AREA
+        ========================= */
+
+        .warriors {
+            width: 100%;
+
+            height: calc(100vh - 125px);
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: flex-start;
+
+            gap: 38px;
+
+            padding: 72px 6% 40px;
+
+            position: relative;
+
+            z-index: 5;
+        }
+
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .warrior-card {
+            width: 29%;
+
+            max-width: 440px;
+
+            min-width: 250px;
+
+            height: 690px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            border: 3px solid #664416;
+
+            border-radius: 8px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #211309,
+                    #0e0804
+                );
+
+            box-shadow:
+                0 0 15px rgba(0, 0, 0, 0.85),
+                inset 0 0 15px rgba(0, 0, 0, 0.85);
+
+            transition: 0.25s;
+        }
+
+
+        .warrior-card.selected {
+            border-color: #c18a28;
+
+            box-shadow:
+                0 0 12px rgba(219, 160, 50, 0.7),
+                0 0 28px rgba(209, 143, 30, 0.35),
+                inset 0 0 15px rgba(255, 186, 55, 0.15);
+        }
+
+
+        .warrior-card:hover {
+            transform: translateY(-5px);
+        }
+
+
+        /* CARD IMAGE */
+
+        .king-image {
+            width: 100%;
+            height: 76%;
+
+            display: block;
+
+            object-fit: cover;
+            object-position: center top;
+        }
+
+
+        /* DARK OVERLAY */
+
+        .warrior-card.locked .king-image {
+            filter:
+                brightness(0.32)
+                saturate(0.7);
+        }
+
+
+        /* GOLD OVERLAY FOR SELECTED */
+
+        .warrior-card.selected::after {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            right: 0;
+
+            top: 0;
+            bottom: 0;
+
+            pointer-events: none;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    transparent 60%,
+                    rgba(25, 12, 3, 0.35)
+                );
+        }
+
+
+        /* =========================
+           CARD BOTTOM
+        ========================= */
+
+        .card-bottom {
+            position: absolute;
+
+            left: 0;
+            right: 0;
+
+            bottom: 0;
+
+            height: 165px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding-top: 35px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(16, 8, 3, 0.84),
+                    #0c0602 35%
+                );
+
+            border-top: 1px solid rgba(173, 119, 33, 0.3);
+
+            z-index: 5;
+        }
+
+
+        .king-name {
+            font-size: 28px;
+
+            color: #e1bd72;
+
+            text-align: center;
+
+            line-height: 1.3;
+
+            text-shadow:
+                2px 2px 3px #000,
+                0 0 6px rgba(220, 165, 65, 0.2);
+        }
+
+
+        /* =========================
+           CHECK CIRCLE
+        ========================= */
+
+        .check-circle {
+            position: absolute;
+
+            left: 50%;
+            top: 68%;
+
+            transform: translate(-50%, -50%);
+
+            width: 100px;
+            height: 100px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #4b300c,
+                    #171008
+                );
+
+            border: 4px solid #9d6b18;
+
+            box-shadow:
+                0 0 12px rgba(218, 159, 45, 0.6),
+                inset 0 0 12px #000;
+
+            z-index: 10;
+        }
+
+
+        .check {
+            font-family: Arial, sans-serif;
+
+            font-size: 64px;
+
+            color: #ffd04e;
+
+            font-weight: bold;
+
+            text-shadow:
+                0 0 8px #e5a82d;
+        }
+
+
+        /* =========================
+           LOCK
+        ========================= */
+
+        .lock-circle {
+            position: absolute;
+
+            left: 50%;
+            top: 68%;
+
+            transform: translate(-50%, -50%);
+
+            width: 105px;
+            height: 105px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                radial-gradient(
+                    circle,
+                    #3a2611,
+                    #110a05
+                );
+
+            border: 3px solid #76501c;
+
+            box-shadow:
+                0 0 10px rgba(0, 0, 0, 0.9),
+                inset 0 0 10px #000;
+
+            z-index: 10;
+        }
+
+
+        .lock {
+            position: relative;
+
+            width: 38px;
+            height: 43px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #e3b84f,
+                    #a87519
+                );
+
+            border-radius: 5px;
+
+            box-shadow:
+                0 2px 5px #000;
+        }
+
+
+        .lock::before {
+            content: "";
+
+            position: absolute;
+
+            width: 27px;
+            height: 29px;
+
+            left: 50%;
+            top: -24px;
+
+            transform: translateX(-50%);
+
+            border: 6px solid #e1b94f;
+
+            border-bottom: none;
+
+            border-radius: 18px 18px 0 0;
+        }
+
+
+        .lock::after {
+            content: "";
+
+            position: absolute;
+
+            width: 7px;
+            height: 15px;
+
+            left: 50%;
+            top: 14px;
+
+            transform: translateX(-50%);
+
+            background: #4a2d09;
+
+            border-radius: 5px;
+        }
+
+
+        /* =================================================
+           SETTINGS POPUP
+        ================================================= */
+
+        .settings-overlay {
+
+            position: fixed;
+
+            inset: 0;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(0,0,0,.78);
+
+            z-index: 200;
+        }
+
+
+        .settings-overlay.show {
+
+            display: flex;
+        }
+
+
+        .settings-panel {
+
+            width: 560px;
+
+            max-width: 92vw;
+
+            max-height: 88vh;
+
+            overflow-y: auto;
+
+            position: relative;
+
+            padding: 30px;
+
+            border: 3px solid #b7862d;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #2c180b,
+                    #100906
+                );
+
+            box-shadow:
+                0 20px 70px rgba(0,0,0,.95),
+                0 0 25px rgba(211,157,48,.3);
+        }
+
+
+        .settings-panel h2 {
+
+            text-align: center;
+
+            color: #f1cc72;
+
+            font-size: 30px;
+
+            letter-spacing: 3px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .settings-close {
+
+            position: absolute;
+
+            top: 12px;
+            right: 15px;
+
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            border: 2px solid #9c7229;
+
+            background: #35160e;
+
+            color: #f5d68a;
+
+            font-size: 23px;
+
+            cursor: pointer;
+        }
+
+
+        .settings-row {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 15px 5px;
+
+            border-bottom:
+                1px solid rgba(204,158,73,.25);
+
+            color: #e7d19b;
+
+            font-size: 17px;
+
+            gap: 15px;
+        }
+
+
+        .settings-toggle {
+
+            width: 54px;
+            height: 28px;
+
+            border-radius: 20px;
+
+            background: #42231a;
+
+            border: 2px solid #8e6829;
+
+            position: relative;
+
+            cursor: pointer;
+        }
+
+
+        .settings-toggle::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 20px;
+            height: 20px;
+
+            border-radius: 50%;
+
+            background: #a99a7a;
+
+            top: 2px;
+            left: 3px;
+
+            transition: .2s;
+        }
+
+
+        .settings-toggle.active {
+
+            background: #8d6118;
+        }
+
+
+        .settings-toggle.active::after {
+
+            left: 27px;
+
+            background: #ffe18a;
+        }
+
+
+        .settings-select {
+
+            background: #32180b;
+
+            color: #f5d68a;
+
+            border: 2px solid #8e6829;
+
+            padding: 7px;
+
+            border-radius: 7px;
+
+            outline: none;
+        }
+
+
+        .settings-button-bottom {
+
+            width: 100%;
+
+            margin-top: 14px;
+
+            padding: 13px;
+
+            border-radius: 10px;
+
+            border: 2px solid #9d7025;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #6b3517,
+                    #321307
+                );
+
+            color: #f5d68a;
+
+            font-size: 17px;
+
+            cursor: pointer;
+        }
+
+
+        .settings-button-bottom:hover {
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #8c4b1c,
+                    #4b1b0b
+                );
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .top-bar {
+                height: 105px;
+            }
+
+            .page-title {
+                min-width: 390px;
+            }
+
+            .page-title span {
+                font-size: 26px;
+            }
+
+            .coin-box {
+                right: 115px;
+                width: 190px;
+            }
+
+            .coin-value {
+                margin-left: 18px;
+                font-size: 22px;
+            }
+
+            .settings-button {
+                width: 70px;
+                height: 70px;
+                font-size: 38px;
+                right: 15px;
+            }
+
+            .center-logo,
+            .center-logo img {
+                width: 105px;
+                height: 105px;
+            }
+
+            .warriors {
+                height: calc(100vh - 105px);
+                gap: 20px;
+                padding-top: 45px;
+            }
+
+            .warrior-card {
+                height: 600px;
+            }
+
+            .king-name {
+                font-size: 23px;
+            }
+        }
+
+
+        @media (max-width: 800px) {
+
+            .page-title {
+                min-width: 280px;
+                padding-left: 25px;
+            }
+
+            .page-title span {
+                font-size: 20px;
+            }
+
+            .coin-box {
+                display: none;
+            }
+
+            .warriors {
+                gap: 10px;
+                padding: 35px 2% 20px;
+            }
+
+            .warrior-card {
+                min-width: 0;
+                width: 32%;
+                height: 520px;
+            }
+
+            .king-name {
+                font-size: 18px;
+            }
+
+            .check-circle,
+            .lock-circle {
+                width: 75px;
+                height: 75px;
+                top: 68%;
+            }
+
+            .check {
+                font-size: 46px;
+            }
+
+            .lock {
+                transform: scale(0.75);
+            }
+
+            .settings-panel {
+
+                padding: 22px;
+
+                max-height: 90vh;
+            }
+
+            .settings-panel h2 {
+
+                font-size: 23px;
+            }
+
+            .settings-row {
+
+                font-size: 14px;
+
+                padding: 12px 3px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="game-screen">
+
+
+    <!-- =========================
+         TOP BAR
+    ========================== -->
+
+    <div class="top-bar">
+
+
+        <!-- BACK -->
+        <div
+            class="back-button"
+            onclick="goBack()"
+            title="Back">
+
+            <span class="back-arrow">‹</span>
+
+        </div>
+
+
+        <!-- TITLE -->
+        <div class="page-title">
+
+            <span>CHOOSE YOUR WARRIOR</span>
+
+        </div>
+
+
+        <!-- CENTER LOGO -->
+        <div class="center-logo">
+
+            <img
+                src="logo2.jpeg"
+                alt="Pandya Logo">
+
+        </div>
+
+
+        <!-- COINS -->
+        <div class="coin-box">
+
+            <div class="coin-icon">
+                C
+            </div>
+
+            <div class="coin-value">
+                100
+            </div>
+
+        </div>
+
+
+        <!-- SETTINGS -->
+        <button
+            class="settings-button"
+            onclick="openSettings()"
+            title="Settings">
+
+            ⚙
+
+        </button>
+
+    </div>
+
+
+
+    <!-- =========================
+         WARRIORS
+    ========================== -->
+
+    <div class="warriors">
+
+
+        <!-- =====================
+             KING 1
+        ====================== -->
+
+        <div
+            class="warrior-card selected"
+            onclick="selectKing(1)">
+
+            <img
+                class="king-image"
+                src="King1.jpeg"
+                alt="பூதப்பெருவழுதி">
+
+            <div class="check-circle">
+
+                <span class="check">✓</span>
+
+            </div>
+
+            <div class="card-bottom">
+
+                <div class="king-name">
+                    பூதப்பெருவழுதி
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================
+             KING 2
+        ====================== -->
+
+        <div
+            class="warrior-card locked"
+            onclick="lockedMessage()">
+
+            <img
+                class="king-image"
+                src="King2.jpeg"
+                alt="நெடுஞ்செழியன் II">
+
+            <div class="lock-circle">
+
+                <div class="lock"></div>
+
+            </div>
+
+            <div class="card-bottom">
+
+                <div class="king-name">
+                    நெடுஞ்செழியன் II
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =====================
+             KING 3
+        ====================== -->
+
+        <div
+            class="warrior-card locked"
+            onclick="lockedMessage()">
+
+            <img
+                class="king-image"
+                src="King3.jpeg"
+                alt="உக்கிரப் பெருவழுதி">
+
+            <div class="lock-circle">
+
+                <div class="lock"></div>
+
+            </div>
+
+            <div class="card-bottom">
+
+                <div class="king-name">
+                    உக்கிரப் பெருவழுதி
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =================================================
+     SETTINGS POPUP
+================================================= -->
+
+<div
+    class="settings-overlay"
+    id="settingsOverlay"
+    onclick="closeSettingsOutside(event)">
+
+
+    <div class="settings-panel">
+
+
+        <button
+            class="settings-close"
+            onclick="closeSettings()">
+
+            ×
+
+        </button>
+
+
+        <h2>
+            ⚙ GAME SETTINGS
+        </h2>
+
+
+        <!-- SOUND -->
+
+        <div class="settings-row">
+
+            <span>
+                🔊 Sound
+            </span>
+
+            <div
+                class="settings-toggle active"
+                onclick="toggleSetting(this)">
+            </div>
+
+        </div>
+
+
+        <!-- MUSIC -->
+
+        <div class="settings-row">
+
+            <span>
+                🎵 Music
+            </span>
+
+            <div
+                class="settings-toggle active"
+                onclick="toggleSetting(this)">
+            </div>
+
+        </div>
+
+
+        <!-- GRAPHICS -->
+
+        <div class="settings-row">
+
+            <span>
+                🎨 Graphics Quality
+            </span>
+
+            <select class="settings-select">
+
+                <option>Ultra</option>
+                <option>High</option>
+                <option>Medium</option>
+                <option>Low</option>
+
+            </select>
+
+        </div>
+
+
+        <!-- FULLSCREEN -->
+
+        <div class="settings-row">
+
+            <span>
+                ⛶ Fullscreen
+            </span>
+
+            <div
+                class="settings-toggle"
+                onclick="toggleFullscreen(this)">
+            </div>
+
+        </div>
+
+
+        <!-- LANGUAGE -->
+
+        <div class="settings-row">
+
+            <span>
+                🌐 Language
+            </span>
+
+            <select class="settings-select">
+
+                <option>English</option>
+                <option>தமிழ்</option>
+
+            </select>
+
+        </div>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <div class="settings-row">
+
+            <span>
+                🔔 Notifications
+            </span>
+
+            <div
+                class="settings-toggle active"
+                onclick="toggleSetting(this)">
+            </div>
+
+        </div>
+
+
+        <!-- VIBRATION -->
+
+        <div class="settings-row">
+
+            <span>
+                📳 Vibration
+            </span>
+
+            <div
+                class="settings-toggle active"
+                onclick="toggleSetting(this)">
+            </div>
+
+        </div>
+
+
+        <!-- AUTO SAVE -->
+
+        <div class="settings-row">
+
+            <span>
+                💾 Auto Save
+            </span>
+
+            <div
+                class="settings-toggle active"
+                onclick="toggleSetting(this)">
+            </div>
+
+        </div>
+
+
+        <!-- HINTS -->
+
+        <div class="settings-row">
+
+            <span>
+                💡 Hints
+            </span>
+
+            <div
+                class="settings-toggle active"
+                onclick="toggleSetting(this)">
+            </div>
+
+        </div>
+
+
+        <!-- BATTLE EFFECTS -->
+
+        <div class="settings-row">
+
+            <span>
+                ⚔️ Battle Effects
+            </span>
+
+            <div
+                class="settings-toggle active"
+                onclick="toggleSetting(this)">
+            </div>
+
+        </div>
+
+
+        <!-- SUBTITLES -->
+
+        <div class="settings-row">
+
+            <span>
+                📝 Subtitles
+            </span>
+
+            <div
+                class="settings-toggle active"
+                onclick="toggleSetting(this)">
+            </div>
+
+        </div>
+
+
+        <!-- RESET -->
+
+        <button
+            class="settings-button-bottom"
+            onclick="resetGame()">
+
+            🔄 RESET GAME
+
+        </button>
+
+
+        <!-- CLOSE -->
+
+        <button
+            class="settings-button-bottom"
+            onclick="closeSettings()">
+
+            CLOSE
+
+        </button>
+
+
+    </div>
+
+</div>
+<script>
+    /* =========================
+       BACK BUTTON
+    ========================== */
+    function goBack() {
+        window.location.href = "start2.html";
+    }
+
+    /* =========================
+       KING SELECTION
+    ========================== */
+    function selectKing(number) {
+
+        if (number === 1) {
+            window.location.href = "ch1h.html";
+        }
+
+        if (number === 2) {
+            window.location.href = "ch2h.html";
+        }
+
+        if (number === 3) {
+            window.location.href = "ch3h.html";
+        }
+    }
+
+    /* =========================
+       LOCKED KINGS
+    ========================== */
+    function lockedMessage() {
+        // Locked kings do nothing for now.
+    }
+
+    /* =========================
+       SETTINGS
+    ========================== */
+    function openSettings() {
+        document.getElementById("settingsOverlay").classList.add("show");
+    }
+
+    function closeSettings() {
+        document.getElementById("settingsOverlay").classList.remove("show");
+    }
+
+    function closeSettingsOutside(event) {
+        if (event.target.id === "settingsOverlay") {
+            closeSettings();
+        }
+    }
+
+    /* =========================
+       TOGGLE SETTINGS
+    ========================== */
+    function toggleSetting(element) {
+        element.classList.toggle("active");
+    }
+
+    /* =========================
+       FULLSCREEN
+    ========================== */
+    function toggleFullscreen(element) {
+        element.classList.toggle("active");
+
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(() => {
+                element.classList.remove("active");
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    }
+
+    /* =========================
+       RESET GAME
+    ========================== */
+    function resetGame() {
+        alert("Game has been reset!");
+        closeSettings();
+    }
+</script>
+
+
+</body>
+</html>

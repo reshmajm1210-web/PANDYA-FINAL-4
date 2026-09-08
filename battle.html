@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#120a06" />
+    <meta name="description" content="Pandya: Empire of Warriors — a browser-based 3D duel between the Pandya king and the invading warlord. Play on phone or desktop." />
+    <title>Pandya · Empire of Warriors</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700&family=Rajdhani:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./node_modules/three/build/three.module.js",
+          "three/examples/jsm/": "./node_modules/three/examples/jsm/",
+          "three/addons/": "./node_modules/three/examples/jsm/"
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="src/styles/main.css" />
+    <script>
+      // Kingdom Path map is the home screen. Only open the duel directly when a
+      // specific level is requested (map → index.html?level=N).
+      if (!new URLSearchParams(location.search).has('level')) {
+        location.replace('map.html');
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="scene" aria-label="Battle arena"></canvas>
+
+      <!-- ───────────────────────────── Heads-up display ───────────────────────────── -->
+      <div id="hud" class="hud" hidden>
+        <header class="hud__top">
+          <!-- Player -->
+          <section class="fighter-card fighter-card--player" aria-label="Player status">
+            <div class="portrait portrait--player">
+              <img src="assets/ui/hero-portrait.webp" alt="Pandya king portrait" width="96" height="96" />
+            </div>
+            <div class="fighter-card__body">
+              <div class="fighter-card__row">
+                <h2 class="fighter-card__name">Pandiyan</h2>
+                <span class="fighter-card__hp" data-hp-text="player">100</span>
+              </div>
+              <div class="bar bar--player">
+                <div class="bar__lag" data-hp-lag="player"></div>
+                <div class="bar__fill" data-hp-fill="player"></div>
+                <div class="bar__gloss"></div>
+              </div>
+              <ul class="lives" data-lives aria-label="Lives remaining">
+                <li class="life is-active"></li>
+                <li class="life is-active"></li>
+                <li class="life is-active"></li>
+                <li class="life is-active"></li>
+                <li class="life is-active"></li>
+              </ul>
+              <button class="pause" type="button" data-pause aria-label="Pause">||</button>
+            </div>
+          </section>
+
+          <!-- Center -->
+          <div class="hud__center">
+            <div class="vs-badge" aria-hidden="true">
+              <span class="vs-badge__round" data-round-label>Round 1</span>
+              <span class="vs-badge__vs">VS</span>
+            </div>
+            <div class="points" aria-label="Points">Points: <b data-points>0</b></div>
+            <div class="wallet" aria-label="Hero wallet">
+              <span class="wallet__item wallet__item--coin"><i></i><b data-wallet-coins>0</b></span>
+              <span class="wallet__item wallet__item--pearl"><i></i><b data-wallet-pearls>0</b></span>
+            </div>
+            <div class="loot" aria-label="Treasure collected">
+              <span class="loot__item loot__item--coin">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 6.6v10.8M9.4 9.2h4.1a1.9 1.9 0 0 1 0 3.8h-3.4a1.9 1.9 0 0 0 0 3.8h4.5" /></svg>
+                <b data-coins>0</b>
+              </span>
+              <span class="loot__item loot__item--gem">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12l4 6-10 12L2 9z" /><path d="M2 9h20M8 3l-2 6 6 12 6-12-2-6" /></svg>
+                <b data-gems>0</b>
+              </span>
+            </div>
+          </div>
+
+          <!-- Enemy -->
+          <section class="fighter-card fighter-card--enemy" aria-label="Enemy status">
+            <div class="fighter-card__body">
+              <div class="fighter-card__row">
+                <span class="fighter-card__hp" data-hp-text="enemy">100</span>
+                <h2 class="fighter-card__name" data-enemy-name>Spectral Warrior</h2>
+              </div>
+              <div class="bar bar--enemy">
+                <div class="bar__lag" data-hp-lag="enemy"></div>
+                <div class="bar__fill" data-hp-fill="enemy"></div>
+                <div class="bar__gloss"></div>
+              </div>
+              <p class="fighter-card__tag">Warlord of the North · AI</p>
+            </div>
+            <div class="portrait portrait--enemy">
+              <img src="assets/ui/villain-portrait.webp" alt="Enemy king portrait" width="96" height="96" />
+            </div>
+          </section>
+        </header>
+
+        <!-- Floating combat text is injected here -->
+        <div class="floaters" data-floaters aria-hidden="true"></div>
+
+        <p class="announce" data-announce aria-live="polite"></p>
+
+        <!-- ───────────────────────────── Controls ───────────────────────────── -->
+        <div class="hud__bottom">
+          <div class="pad" data-joystick aria-label="Movement joystick" role="group">
+            <div class="pad__ring">
+              <span class="pad__hint pad__hint--up">▲</span>
+              <span class="pad__hint pad__hint--down">▼</span>
+              <span class="pad__label">Move</span>
+            </div>
+            <div class="pad__stick" data-stick></div>
+            <button class="pad__key pad__key--fwd" type="button" data-hold="forward" aria-label="Move forward">▲</button>
+            <button class="pad__key pad__key--back" type="button" data-hold="back" aria-label="Move back">▼</button>
+          </div>
+
+          <div class="actions">
+            <div class="actions__grid">
+              <button class="btn btn--green btn--lg" type="button" data-action="attack">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3.5 20.5 3l-.5 6-9 9-5.5-5.5z" /><path d="M5.5 12.5 3 21l8.5-2.5M8 16l-2 2" /></svg>
+                <span>Attack</span>
+                <i class="btn__cd" data-cooldown="attack"></i>
+              </button>
+              <button class="btn btn--green" type="button" data-hold="defend">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 20 5.5v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10v-6z" /><path d="M9 12.2l2.2 2.3L15.5 10" /></svg>
+                <span>Defend</span>
+              </button>
+              <button class="btn btn--red" type="button" data-action="weapon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 20 4M15 4h5v5" /><path d="M4 8V4h4M9 15l-5 5" /></svg>
+                <span data-weapon-label>Weapon</span>
+              </button>
+              <button class="btn btn--red" type="button" data-action="heal">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5S3.5 15.4 3.5 9.6A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 8.5 2.6c0 5.8-8.5 10.9-8.5 10.9z" /></svg>
+                <span>Heal</span>
+                <i class="btn__cd" data-cooldown="heal"></i>
+              </button>
+              <button class="btn btn--blue" type="button" data-action="dodge">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="15" cy="4.5" r="1.8" /><path d="M4 20l5-6 3 2 3-5 3 2M9 14l-2-4 5-3 3 3" /></svg>
+                <span>Dodge</span>
+                <i class="btn__cd" data-cooldown="dodge"></i>
+              </button>
+              <button class="btn btn--gold btn--lg" type="button" data-action="special">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 21v-6l-2-5 2-1 2 3V4h2v7h1V3h2v8h1V4.5h2V11h1V7h2v9a5 5 0 0 1-5 5z" /></svg>
+                <span>Special</span>
+                <i class="btn__cd" data-cooldown="special"></i>
+              </button>
+              <button class="btn btn--red" type="button" data-action="bow">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20 20 4M20 4h-5m5 0v5" /><path d="M17.5 3.2A13 13 0 0 1 20.8 6.5 13.4 13.4 0 0 1 6.5 20.8 13 13 0 0 1 3.2 17.5" /></svg>
+                <span>Bow</span>
+                <i class="btn__cd" data-cooldown="bow"></i>
+              </button>
+              <div class="btn btn--red btn--indicator" data-enemy-indicator aria-hidden="true">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 21 19.5H3z" /><path d="M12 9.5v4.2M12 16.4v.2" /></svg>
+                <span>Enemy<br />Attack</span>
+              </div>
+            </div>
+            <div class="weapon-strip" data-weapon-strip aria-label="Equipped weapon"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ───────────────────────────── Loading ───────────────────────────── -->
+      <div class="screen screen--loading" data-loading>
+        <div class="screen__inner">
+          <p class="screen__kicker">Madurai · 1279 CE</p>
+          <h1 class="title">
+            <span class="title__small">Pandya</span>
+            <span class="title__big">Empire of Warriors</span>
+          </h1>
+          <div class="loadbar"><div class="loadbar__fill" data-load-fill></div></div>
+          <p class="loadbar__text" data-load-text>Forging the arena…</p>
+        </div>
+      </div>
+
+      <!-- ───────────────────────────── Start ───────────────────────────── -->
+      <div class="screen screen--start" data-start hidden>
+        <div class="screen__inner">
+          <p class="screen__kicker reveal" data-start-kicker>The war drums have sounded</p>
+          <div class="level-chip reveal reveal--1" data-start-level data-level>Level 1</div>
+          <h1 class="title reveal reveal--2">
+            <span class="title__small">Pandya</span>
+            <span class="title__big">Empire of Warriors</span>
+          </h1>
+          <p class="screen__lede reveal reveal--3">
+            Defend the throne of Madurai. Five lives, one enemy king, four royal weapons —
+            <em>vaal, valari, vel</em> and the great bow.
+          </p>
+          <button class="cta reveal reveal--4" type="button" data-play>Begin the duel</button>
+          <ul class="keys reveal reveal--5">
+            <li><kbd>W</kbd>/<kbd>S</kbd> move</li>
+            <li><kbd>J</kbd> attack</li>
+            <li><kbd>K</kbd> defend</li>
+            <li><kbd>L</kbd> weapon</li>
+            <li><kbd>H</kbd> heal</li>
+            <li><kbd>B</kbd> bow</li>
+            <li><kbd>Q</kbd> dodge</li>
+            <li><kbd>E</kbd> special</li>
+            <li><kbd>P</kbd> pause</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ───────────────────────────── Result ───────────────────────────── -->
+      <div class="screen screen--result" data-result hidden>
+        <div class="scroll-card">
+          <div class="scroll-card__rod scroll-card__rod--top"></div>
+          <div class="scroll-card__body">
+            <div class="scroll-card__seal" data-result-icon>
+              <svg viewBox="0 0 48 48" aria-hidden="true">
+                <path d="M9 10h30v28H9z" /><path d="M9 10c0-2.2 1.8-4 4-4h30c-2.2 0-4 1.8-4 4M9 38c0 2.2 1.8 4 4 4h30c-2.2 0-4-1.8-4-4" />
+                <path d="M16 18h16M16 24h16M16 30h9" />
+              </svg>
+            </div>
+            <h2 class="scroll-card__title" data-result-title>You Win</h2>
+            <p class="scroll-card__sub" data-result-sub>The northern warlord kneels before Madurai.</p>
+            <dl class="tally">
+              <div class="tally__row">
+                <dt><span class="tally__ico tally__ico--coin"></span>Coins collected</dt>
+                <dd data-result-coins>0</dd>
+              </div>
+              <div class="tally__row">
+                <dt><span class="tally__ico tally__ico--gem"></span>Gems collected</dt>
+                <dd data-result-gems>0</dd>
+              </div>
+              <div class="tally__row">
+                <dt><span class="tally__ico tally__ico--life"></span>Lives left</dt>
+                <dd data-result-lives>3</dd>
+              </div>
+            </dl>
+            <div class="tally__row tally__row--points"><dt>Total Points</dt><dd data-result-points>0</dd></div>
+            <div class="reward" data-reward hidden>
+              <p class="reward__title">Hero Credits</p>
+              <span class="wallet__item wallet__item--coin"><i></i><b data-reward-coins>+1000</b> Coins</span>
+              <span class="wallet__item wallet__item--pearl"><i></i><b data-reward-pearls>+100</b> Pearls</span>
+              <p class="reward__total">Wallet: <b data-wallet-total-coins>0</b> coins · <b data-wallet-total-pearls>0</b> pearls</p>
+            </div>
+            <dl class="bonus" data-bonus hidden>
+              <div><dt>Time Bonus</dt><dd data-bonus-time>+0 PTS</dd></div>
+              <div><dt>Enemies Defeated</dt><dd data-bonus-kills>+0 PTS</dd></div>
+              <div><dt>Secrets Found</dt><dd data-bonus-secrets>0/3</dd></div>
+            </dl>
+            <div class="result-actions">
+              <button class="cta cta--sm cta--next" type="button" data-again>Continue</button>
+              <button class="round-btn round-btn--retry" type="button" data-retry hidden aria-label="Replay">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9" /><path d="M20 3v6h-6" /></svg>
+                <span>Replay</span>
+              </button>
+              <button class="cta cta--sm" type="button" data-map>Back to Map</button>
+            </div>
+          </div>
+          <div class="scroll-card__rod scroll-card__rod--bottom"></div>
+        </div>
+      </div>
+
+      <!-- ───────────────────────────── Lockout ───────────────────────────── -->
+      <div class="screen screen--locked" data-locked hidden>
+        <div class="screen__inner">
+          <p class="screen__kicker">Kingdom Path</p>
+          <h2 class="title">
+            <span class="title__big">The Kingdom Is Recovering</span>
+          </h2>
+          <p class="screen__lede">
+            All five lives are spent. Return to battle when the time reaches zero.
+          </p>
+          <div class="lockout-timer" data-locked-count>05:00:00</div>
+          <button class="cta" type="button" data-locked-map>Back to Map</button>
+        </div>
+      </div>
+
+      <!-- ───────────────────────────── Pause ───────────────────────────── -->
+      <div class="screen screen--pause" data-paused hidden>
+        <div class="screen__inner">
+          <h2 class="title"><span class="title__big">Paused</span></h2>
+          <button class="cta cta--sm" type="button" data-resume>Resume</button>
+        </div>
+      </div>
+
+      <div class="rotate-hint" data-rotate>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2.5" /><path d="M2.5 15.5A9.5 9.5 0 0 0 12 22M21.5 8.5A9.5 9.5 0 0 0 12 2" /></svg>
+        <p>Turn your phone sideways for the full battlefield</p>
+      </div>
+    </div>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

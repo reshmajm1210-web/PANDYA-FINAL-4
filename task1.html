@@ -1,0 +1,206 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>PANDYA EMPIRE - TASK 1 PALACE</title> 
+ 
+    <!-- CSS --> 
+    <link rel="stylesheet" href="task1.css"> 
+ 
+    <!-- THREE JS IMPORT --> 
+    <script type="importmap"> 
+    { 
+      "imports": { 
+        "three": "./node_modules/three/build/three.module.js", 
+        "three/addons/": "./node_modules/three/examples/jsm/" 
+      } 
+    } 
+    </script> 
+</head> 
+ 
+<body> 
+ 
+    <!-- ================= BACKGROUND IMAGE ================= --> 
+    <!-- bg.jpeg is applied from task1.css --> 
+ 
+    <!-- ================= LOADING SCREEN ================= --> 
+ 
+    <div id="loadingScreen"> 
+ 
+        <div class="loading-box"> 
+ 
+            <h1>PANDYA EMPIRE</h1> 
+ 
+            <h2>ROYAL PALACE MISSION</h2> 
+ 
+            <p class="loading-message"> 
+                Preparing the Royal Kingdom... 
+            </p> 
+ 
+            <div class="loading-bar"> 
+                <div id="progressBar"></div> 
+            </div> 
+ 
+            <p id="loadingText">Loading Palace...</p> 
+ 
+        </div> 
+ 
+    </div> 
+ 
+    <!-- ================= TOP HUD ================= --> 
+ 
+    <div id="hud"> 
+ 
+        <!-- Left --> 
+        <div class="mission-title"> 
+            🏰 TASK 1 : PALACE 
+        </div> 
+ 
+        <!-- Right --> 
+        <div class="hud-right"> 
+ 
+            <div class="status-card"> 
+                ❤️ <span id="lives">5</span> 
+            </div> 
+ 
+            <div class="status-card"> 
+                🪙 <span id="coinCount" data-wallet-coins>5000</span> 
+            </div> 
+ 
+            <div class="status-card"> 
+                ⚪ <span id="pearlCount" data-wallet-pearls>100</span> 
+            </div> 
+ 
+        </div> 
+ 
+    </div> 
+ 
+    <!-- ================= OBJECTIVE ================= --> 
+ 
+    <div id="objectiveBox"> 
+ 
+        <h3>ROYAL OBJECTIVE</h3> 
+ 
+        <p> 
+            Build the Pandya Royal Palace using 
+            <b>5000 Coins</b> and <b>100 Pearls</b>. 
+        </p> 
+ 
+        <div class="reward-info"> 
+ 
+            <div>🪙 Build Cost : <b>5000</b></div> 
+ 
+            <div>⚪ Build Cost : <b>100</b></div> 
+ 
+        </div> 
+ 
+    </div> 
+ 
+    <!-- ================= BUILD BUTTON ================= --> 
+ 
+    <div id="buildPanel"> 
+ 
+        <button id="buildBtn"> 
+            🏰 BUILD PALACE 
+        </button> 
+ 
+    </div> 
+ 
+    <!-- ================= 3D GAME AREA ================= --> 
+ 
+    <canvas id="gameCanvas"></canvas> 
+ 
+    <!-- ================= BOTTOM BUTTONS ================= --> 
+ 
+    <div id="bottomButtons"> 
+ 
+        <button class="backBtn" 
+                onclick="window.location.href='task.html'"> 
+            ⬅ BACK 
+        </button> 
+ 
+        <button class="missionBtn" 
+                id="completeBtn"> 
+            COMPLETE MISSION 
+        </button> 
+ 
+    </div> 
+ 
+    <!-- ================= MISSION COMPLETE POPUP ================= --> 
+ 
+    <div id="missionPopup"> 
+ 
+        <div class="popup-box"> 
+ 
+            <h2>🏆 PALACE COMPLETED!</h2> 
+ 
+            <p> 
+                The Royal Palace has been successfully built. 
+            </p> 
+ 
+            <div class="reward-box"> 
+ 
+                <div class="reward-row"> 
+                    🪙 Coins Reward : 
+                    <b>+5000</b> 
+                </div> 
+ 
+                <div class="reward-row"> 
+                    ⚪ Pearls Reward : 
+                    <b>+100</b> 
+                </div> 
+ 
+            </div>
+
+            <button id="continueBtn">
+                CONTINUE TO TASK BOARD
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ================= NOT ENOUGH COINS & PEARLS POPUP ================= -->
+
+    <div id="fundPopup">
+
+        <div class="fund-box">
+
+            <h2>❌ NOT ENOUGH RESOURCES</h2>
+
+            <p class="fund-message">
+                You don't have enough Coins and Pearls to build the Royal Palace!
+            </p>
+
+            <div class="fund-details">
+
+                <div class="fund-row">
+                    🪙 Required : <b>5000</b> &nbsp;•&nbsp; You have : <b id="fundCoins">0</b>
+                </div>
+
+                <div class="fund-row">
+                    ⚪ Required : <b>100</b> &nbsp;•&nbsp; You have : <b id="fundPearls">0</b>
+                </div>
+
+            </div>
+
+            <button id="fundOkBtn">
+                OK
+            </button>
+
+        </div>
+
+    </div>
+
+    <div id="buildEffect"> 
+
+        <div class="effect-circle"></div> 
+
+        <p id="buildEffectText">🏰 Building the Royal Palace...</p> 
+
+    </div>
+    <script type="module" src="task1.js"></script> 
+    <script src="wallet.js"></script>
+</body>
+</html>

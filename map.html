@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PANDYA EMPIRE - KINGDOM PATH</title>
+
+    <link rel="stylesheet" href="map.css">
+</head>
+
+<body>
+
+    <!-- ================= TOP HUD ================= -->
+    <div id="hud">
+
+        <!-- LEFT : KING INFO -->
+        <div class="player">
+            <img src="kinglogo.jpeg" class="king-logo" alt="Bootha Pandyan">
+
+            <div class="player-text">
+                <h2>BHOOTHA PANDYAN</h2>
+                <p>PANDYA KINGDOM</p>
+            </div>
+        </div>
+
+        <!-- CENTER : TITLE -->
+        <div class="kingdom-title">
+            KINGDOM PATH
+        </div>
+
+        <!-- CURRENCY : COINS + PEARLS -->
+        <div class="currency-bar">
+            <div class="cur-chip cur-coin">
+                <span class="cur-ico">C</span>
+                <span data-wallet-coins>100</span>
+            </div>
+            <div class="cur-chip cur-pearl">
+                <span class="cur-ico">◗</span>
+                <span data-wallet-pearls>50</span>
+            </div>
+        </div>
+
+        <!-- RIGHT : LIVES + TASK -->
+        <div class="lives-box">
+
+            <div class="live-text">LIVES</div>
+
+            <div class="hearts">❤️ ❤️ ❤️ ❤️ ❤️</div>
+
+            <!-- TASK LOGO BUTTON -->
+            <button id="taskBtn" onclick="openTask()">
+                <img src="tasklogo.jpeg" class="task-logo" alt="Task Logo">
+                <span>TASK</span>
+            </button>
+<button id="backBtn" onclick="goBack()">BACK</button>
+        </div>
+
+    </div>
+
+    <!-- ================= MAP ================= -->
+    <div class="map-container">
+
+        <button id="level1" class="level unlock" onclick="openLevel(1)">
+            1
+            <span class="label">LEVEL 1</span>
+        </button>
+
+        <button id="level2" class="level lock" onclick="openLevel(2)">
+            🔒
+            <span class="label">LEVEL 2</span>
+        </button>
+
+        <button id="level3" class="level lock" onclick="openLevel(3)">
+            🔒
+            <span class="label">LEVEL 3</span>
+        </button>
+
+        <button id="level4" class="level lock" onclick="openLevel(4)">
+            🔒
+            <span class="label">LEVEL 4</span>
+        </button>
+
+        <button id="level5" class="level lock" onclick="openLevel(5)">
+            🔒
+            <span class="label">LEVEL 5</span>
+        </button>
+
+        <button id="level6" class="level lock" onclick="openLevel(6)">
+            🔒
+            <span class="label">LEVEL 6</span>
+        </button>
+
+        <button id="level7" class="level lock" onclick="openLevel(7)">
+            🔒
+            <span class="label">LEVEL 7</span>
+        </button>
+
+        <button id="level8" class="level lock" onclick="openLevel(8)">
+            🔒
+            <span class="label">LEVEL 8</span>
+        </button>
+
+        <button id="level9" class="level lock" onclick="openLevel(9)">
+            🔒
+            <span class="label">LEVEL 9</span>
+        </button>
+
+        <a id="characterMilestone" class="character-milestone" href="showlevel.html" hidden>
+            GO TO THE CHARACTER SELECTION PAGE
+        </a>
+    </div>
+
+    <!-- ================= LEVEL POPUP ================= -->
+    <div id="popup">
+
+        <div class="popup-box">
+
+            <h2 id="levelTitle"></h2>
+
+            <p id="levelText"></p>
+
+            <button id="enterBtn">
+                ENTER LEVEL
+            </button>
+
+            <button class="closeBtn" onclick="closePopup()">
+                CLOSE
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ================= TASK POPUP ================= -->
+    <div id="taskPopup">
+
+        <div class="task-box">
+
+            <h2>📜 CURRENT TASK</h2>
+
+            <p id="taskText">
+                Battle of the First Fortress. Defeat all enemies and enter the fort.
+            </p>
+
+            <button class="closeTaskBtn" onclick="closeTask()">
+                CLOSE
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script src="wallet.js"></script>
+    <script src="progression.js"></script>
+    <script src="map.js"></script>
+
+</body>
+</html>

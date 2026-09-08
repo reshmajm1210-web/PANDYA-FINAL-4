@@ -1,0 +1,24 @@
+{
+  "name": "pandiya",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reshmajm1210-web/pandiya.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/reshmajm1210-web/pandiya/issues"
+  },
+  "homepage": "https://github.com/reshmajm1210-web/pandiya#readme",
+  "dependencies": {
+    "three": "^0.185.1"
+  }
+}

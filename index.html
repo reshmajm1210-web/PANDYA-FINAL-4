@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+    content="width=device-width,initial-scale=1.0">
+
+<title> PANDYA - Empire of Warriors</title>
+
+
+<style>
+
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+
+html,
+body{
+width:100%;
+height:100%;
+overflow:hidden;
+}
+
+
+body{
+font-family:Georgia,"Times New Roman",serif;
+background:#080503;
+color:white;
+}
+
+
+/* =========================
+GAME SCREEN
+========================= */
+
+.game-screen{
+
+position:relative;
+
+width:100%;
+height:100vh;
+
+background:
+linear-gradient(
+rgba(0,0,0,.15),
+rgba(0,0,0,.55)
+),
+url("bg.jpeg") center/cover no-repeat;
+
+overflow:hidden;
+}
+
+
+.game-screen:before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+border:4px solid rgba(180,130,45,.75);
+
+box-shadow:
+inset 0 0 35px rgba(0,0,0,.9),
+inset 0 0 8px rgba(255,200,80,.4);
+
+pointer-events:none;
+
+z-index:50;
+}
+
+
+.game-screen:after{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:
+radial-gradient(
+circle at center,
+transparent 30%,
+rgba(0,0,0,.45) 100%
+);
+
+pointer-events:none;
+
+z-index:1;
+}
+
+
+/* =========================
+COINS
+========================= */
+
+.currency-area{
+
+position:absolute;
+
+top:25px;
+right:105px;
+
+display:flex;
+align-items:center;
+gap:10px;
+
+z-index:20;
+}
+
+.pearl-icon{
+background:radial-gradient(circle at 35% 30%,#ffffff,#bfe3ff 55%,#7fb4e6) !important;
+color:#2a4d70 !important;
+border:2px solid #eaf6ff !important;
+}
+
+
+.currency{
+
+min-width:120px;
+
+height:44px;
+
+padding:0 18px;
+
+border-radius:24px;
+
+border:2px solid #80601f;
+
+background:
+linear-gradient(
+180deg,
+rgba(53,34,13,.95),
+rgba(15,9,4,.95)
+);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:10px;
+
+color:#f6d889;
+
+font-size:18px;
+
+font-weight:bold;
+
+box-shadow:
+0 4px 12px rgba(0,0,0,.7);
+}
+
+
+.coin-icon{
+
+width:27px;
+height:27px;
+
+border-radius:50%;
+
+background:#d5a43a;
+
+color:#5a3507;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:14px;
+
+font-weight:bold;
+
+border:2px solid #ffe28a;
+}
+
+
+/* =========================
+SETTINGS
+========================= */
+
+.settings-button{
+
+position:absolute;
+
+top:20px;
+right:20px;
+
+width:62px;
+height:62px;
+
+border-radius:50%;
+
+border:3px solid #9e7529;
+
+background:
+radial-gradient(
+circle,
+#443018,
+#100b07
+);
+
+color:#f5d68a;
+
+font-size:31px;
+
+cursor:pointer;
+
+z-index:60;
+
+box-shadow:
+0 5px 18px rgba(0,0,0,.8);
+
+transition:.25s;
+}
+
+
+.settings-button:hover{
+
+transform:rotate(30deg) scale(1.06);
+
+}
+
+
+/* =========================
+CENTER
+========================= */
+
+.center-content{
+
+position:absolute;
+
+left:50%;
+top:49%;
+
+transform:translate(-50%,-50%);
+
+width:min(750px,90vw);
+
+text-align:center;
+
+z-index:30;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+}
+
+
+.game-logo{
+
+width:360px;
+height:360px;
+
+max-width:40vw;
+max-height:40vw;
+
+object-fit:cover;
+
+border-radius:50%;
+
+filter:
+drop-shadow(0 12px 20px rgba(0,0,0,.9))
+drop-shadow(0 0 20px rgba(255,190,60,.35));
+
+margin-bottom:5px;
+}
+
+
+.game-title{
+
+font-size:clamp(45px,7vw,82px);
+
+font-weight:900;
+
+letter-spacing:8px;
+
+color:#e9bd58;
+
+text-shadow:
+3px 3px 0 #4b2608,
+0 0 12px rgba(255,180,50,.5),
+0 6px 15px black;
+}
+
+
+.subtitle{
+
+margin-top:2px;
+
+font-size:clamp(15px,2vw,23px);
+
+letter-spacing:5px;
+
+color:#f0d28a;
+
+text-shadow:
+0 3px 5px black;
+}
+.start-button{
+
+position:relative;
+
+margin-top:27px;
+
+width:400px;
+
+max-width:80vw;
+
+height:82px;
+
+border-radius:18px;
+
+border:4px solid #d6a43d;
+
+background:
+
+linear-gradient(
+180deg,
+#ff4a2d 0%,
+#c72518 25%,
+#85140d 55%,
+#450704 100%
+);
+
+color:#fff1bd;
+
+font-family:
+Georgia,
+"Times New Roman",
+serif;
+
+font-size:35px;
+
+font-weight:bold;
+
+letter-spacing:7px;
+
+cursor:pointer;
+
+box-shadow:
+
+inset 0 3px 0 rgba(255,255,255,.45),
+
+inset 0 -8px 15px rgba(0,0,0,.55),
+
+0 0 0 2px #5b2b08,
+
+0 6px 0 #351006,
+
+0 10px 25px rgba(0,0,0,.9),
+
+0 0 25px rgba(231,174,55,.35);
+
+text-shadow:
+
+2px 2px 0 #561006,
+
+0 0 8px rgba(255,220,130,.35);
+
+transition:
+transform .18s,
+box-shadow .18s,
+background .18s;
+
+}
+
+.start-button:before{
+
+content:"";
+
+position:absolute;
+
+left:18px;
+right:18px;
+
+top:7px;
+
+height:2px;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+#ffe5a0,
+transparent
+);
+
+opacity:.9;
+
+}
+.start-button:after{
+
+content:"";
+
+position:absolute;
+
+left:25px;
+right:25px;
+
+bottom:8px;
+
+height:2px;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(255,211,108,.65),
+transparent
+);
+
+}
+
+
+/* Hover */
+
+.start-button:hover{
+
+transform:
+translateY(-4px)
+scale(1.025);
+
+background:
+
+linear-gradient(
+180deg,
+#ff6544 0%,
+#df3020 30%,
+#9b1710 60%,
+#5b0906 100%
+);
+
+box-shadow:
+
+inset 0 3px 0 rgba(255,255,255,.5),
+
+inset 0 -8px 18px rgba(0,0,0,.5),
+
+0 0 0 2px #6b3508,
+
+0 7px 0 #351006,
+
+0 12px 28px rgba(0,0,0,.9),
+
+0 0 35px rgba(255,190,55,.55);
+
+}
+
+
+/* Click */
+
+.start-button:active{
+
+transform:
+translateY(4px)
+scale(.99);
+
+box-shadow:
+
+inset 0 3px 0 rgba(255,255,255,.2),
+
+0 2px 0 #351006,
+
+0 5px 10px rgba(0,0,0,.8);
+
+}
+
+
+/* =========================
+BOTTOM MENU
+========================= */
+
+.bottom-menu{
+
+position:absolute;
+
+left:35px;
+right:35px;
+bottom:22px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:flex-end;
+
+z-index:20;
+
+/* The empty center of this bar must not steal clicks from the START button. */
+pointer-events:none;
+}
+
+.menu-item{
+pointer-events:auto;
+}
+
+
+.left-menu,
+.right-menu{
+
+display:flex;
+
+align-items:center;
+
+gap:35px;
+}
+
+
+.right-menu{
+gap:55px;
+}
+
+
+.menu-item{
+
+min-width:92px;
+
+text-align:center;
+
+cursor:pointer;
+
+color:#e7d19b;
+
+transition:.2s;
+}
+
+
+.menu-icon{
+
+width:65px;
+height:65px;
+
+margin:auto;
+
+border-radius:50%;
+
+border:3px solid #987027;
+
+background:
+radial-gradient(
+circle,
+#4b351c,
+#130c06
+);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:30px;
+
+box-shadow:
+0 5px 14px rgba(0,0,0,.8);
+
+transition:.2s;
+}
+
+
+.menu-item span{
+
+display:block;
+
+margin-top:8px;
+
+font-size:14px;
+
+letter-spacing:1px;
+
+white-space:nowrap;
+}
+
+
+.menu-item:hover{
+
+color:#ffe69b;
+
+transform:translateY(-5px);
+}
+
+
+.menu-item:hover .menu-icon{
+
+border-color:#e2b34f;
+
+box-shadow:
+0 0 18px rgba(230,170,60,.5);
+}
+
+
+/* =========================
+POPUP
+========================= */
+
+.popup-overlay{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.78);
+
+background:rgba(0,0,0,.78);
+
+display:none;
+
+align-items:center;
+
+justify-content:center;
+
+z-index:100;
+}
+
+
+.popup-overlay.show{
+
+display:flex;
+}
+
+
+.popup{
+
+width:560px;
+
+max-width:92vw;
+
+max-height:88vh;
+
+overflow-y:auto;
+
+border-radius:20px;
+
+border:3px solid #b7862d;
+
+background:
+linear-gradient(
+145deg,
+#2c180b,
+#100906
+);
+
+box-shadow:
+0 20px 70px rgba(0,0,0,.95),
+0 0 25px rgba(211,157,48,.3);
+
+padding:30px;
+
+position:relative;
+}
+
+
+.popup h2{
+
+text-align:center;
+
+color:#f1cc72;
+
+font-size:30px;
+
+letter-spacing:3px;
+
+margin-bottom:20px;
+}
+.close-button{
+position:absolute;
+top:12px;
+right:15px;
+width:38px;
+height:38px;
+border-radius:50%;
+border:2px solid #9c7229;
+background:#35160e;
+color:#f5d68a;
+font-size:23px;
+cursor:pointer;
+}
+.setting-row{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:15px 5px;
+border-bottom:1px solid rgba(204,158,73,.25);
+color:#e7d19b;
+font-size:17px;
+gap:15px;
+}
+.toggle{
+width:54px;
+height:28px;
+border-radius:20px;
+background:#42231a;
+border:2px solid #8e6829;
+position:relative;
+cursor:pointer;
+}
+.toggle:after{
+content:"";
+position:absolute;
+width:20px;
+height:20px;
+border-radius:50%;
+background:#a99a7a;
+top:2px;
+left:3px;
+transition:.2s;
+}
+.toggle.active{
+background:#8d6118;
+}
+.toggle.active:after{
+left:27px;
+background:#ffe18a;
+}
+.setting-select{
+
+background:#32180b;
+
+color:#f5d68a;
+
+border:2px solid #8e6829;
+
+padding:7px;
+
+border-radius:7px;
+outline:none;
+}
+.popup-button{
+width:100%;
+margin-top:14px;
+padding:13px;
+border-radius:10px;
+border:2px solid #9d7025;
+background:
+linear-gradient(
+180deg,
+#6b3517,
+#321307
+);
+color:#f5d68a;
+font-size:17px;
+cursor:pointer;
+}
+.popup-button:hover{
+background:
+linear-gradient(
+180deg,
+#8c4b1c,
+#4b1b0b
+);
+}
+.info-title{
+
+text-align:center;
+
+color:#f1cc72;
+
+font-size:30px;
+
+letter-spacing:3px;
+
+margin-bottom:20px;
+}
+
+
+.info-card{
+
+padding:18px;
+
+margin-bottom:12px;
+
+border:1px solid #8e6829;
+
+border-radius:10px;
+
+background:rgba(50,25,10,.7);
+}
+
+
+.info-card h3{
+
+color:#f2cd72;
+
+margin-bottom:7px;
+}
+.info-card p{
+color:#d5c39d;
+line-height:1.5;
+}
+@media(max-width:800px){
+
+.currency-area{
+
+top:15px;
+right:75px;
+}
+.currency{
+min-width:95px;
+height:38px;
+font-size:15px;
+}
+.settings-button{
+
+width:52px;
+height:52px;
+font-size:25px;
+top:12px;
+right:12px;
+}
+.center-content{
+top:47%;
+}
+.game-logo{
+
+width:240px;
+height:240px;
+
+max-width:55vw;
+max-height:55vw;
+}
+.game-title{
+font-size:43px;
+letter-spacing:4px;
+}
+.subtitle{
+
+font-size:12px;
+letter-spacing:3px;
+}
+.start-button{
+
+width:280px;
+
+height:68px;
+
+font-size:27px;
+
+letter-spacing:5px;
+}
+.bottom-menu{
+
+left:10px;
+right:10px;
+bottom:10px;
+}
+.left-menu{
+
+gap:8px;
+}
+
+
+.right-menu{
+
+gap:12px;
+}
+
+
+.menu-icon{
+
+width:52px;
+height:52px;
+
+font-size:23px;
+}
+
+
+.menu-item{
+
+min-width:60px;
+}
+
+
+.menu-item span{
+
+font-size:9px;
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body data-wallet-hidden>
+
+
+<div class="game-screen">
+
+
+<!-- =========================
+SETTINGS
+========================= -->
+
+<button
+class="settings-button"
+onclick="openSettings()">
+
+⚙
+
+</button>
+
+
+<!-- =========================
+CENTER
+========================= -->
+
+<div class="center-content">
+
+
+<img
+src="logo.jpeg"
+alt="Pandya Logo"
+class="game-logo">
+
+
+<div class="game-title">
+PANDYA
+</div>
+
+
+<div class="subtitle">
+EMPIRE OF WARRIORS
+</div>
+
+
+<button
+class="start-button"
+onclick="startGame()">
+
+START
+
+</button>
+
+
+</div>
+
+
+<!-- =========================
+BOTTOM MENU
+========================= -->
+
+<div class="bottom-menu">
+
+
+<div class="left-menu">
+
+
+<div
+class="menu-item"
+onclick="openHeroes()">
+
+<div class="menu-icon">
+⚔️
+</div>
+
+<span>
+HEROES
+</span>
+
+</div>
+
+
+<div
+class="menu-item"
+onclick="openQuests()">
+
+<div class="menu-icon">
+📜
+</div>
+
+<span>
+QUESTS
+</span>
+
+</div>
+
+
+</div>
+
+
+<div class="right-menu">
+
+
+<div
+class="menu-item"
+onclick="openAchievements()">
+
+<div class="menu-icon">
+🏆
+</div>
+
+<span>
+ACHIEVEMENTS
+</span>
+
+</div>
+
+
+<div
+class="menu-item"
+onclick="openLeaderboard()">
+
+<div class="menu-icon">
+👑
+</div>
+
+<span>
+LEADERBOARD
+</span>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- =========================
+SETTINGS POPUP
+========================= -->
+
+<div
+class="popup-overlay"
+id="settingsPopup"
+onclick="outsideClose(event)">
+
+
+<div class="popup">
+
+
+<button
+class="close-button"
+onclick="closeSettings()">
+
+×
+
+</button>
+
+
+<h2>
+⚙ GAME SETTINGS
+</h2>
+
+
+<div class="setting-row">
+
+<span>
+🔊 Sound
+</span>
+
+<div
+class="toggle active"
+onclick="toggleSetting(this)">
+</div>
+
+</div>
+
+
+<div class="setting-row">
+
+<span>
+🎵 Music
+</span>
+
+<div
+class="toggle active"
+onclick="toggleSetting(this)">
+</div>
+
+</div>
+
+
+<div class="setting-row">
+
+<span>
+🎨 Graphics Quality
+</span>
+
+<select class="setting-select">
+
+<option>Ultra</option>
+<option>High</option>
+<option>Medium</option>
+<option>Low</option>
+
+</select>
+
+</div>
+
+
+<div class="setting-row">
+
+<span>
+⛶ Fullscreen
+</span>
+
+<div
+class="toggle"
+onclick="toggleFullscreen(this)">
+</div>
+
+</div>
+
+
+<div class="setting-row">
+
+<span>
+🌐 Language
+</span>
+
+<select class="setting-select">
+
+<option>English</option>
+<option>தமிழ்</option>
+
+</select>
+
+</div>
+
+
+<div class="setting-row">
+
+<span>
+🔔 Notifications
+</span>
+
+<div
+class="toggle active"
+onclick="toggleSetting(this)">
+</div>
+
+</div>
+
+
+<div class="setting-row">
+
+<span>
+📳 Vibration
+</span>
+
+<div
+class="toggle active"
+onclick="toggleSetting(this)">
+</div>
+
+</div>
+
+
+<div class="setting-row">
+
+<span>
+💾 Auto Save
+</span>
+
+<div
+class="toggle active"
+onclick="toggleSetting(this)">
+</div>
+
+</div>
+
+
+<div class="setting-row">
+
+<span>
+💡 Hints
+</span>
+
+<div
+class="toggle active"
+onclick="toggleSetting(this)">
+</div>
+
+</div>
+
+
+<div class="setting-row">
+
+<span>
+⚔️ Battle Effects
+</span>
+
+<div
+class="toggle active"
+onclick="toggleSetting(this)">
+</div>
+
+</div>
+
+
+<div class="setting-row">
+
+<span>
+📝 Subtitles
+</span>
+
+<div
+class="toggle active"
+onclick="toggleSetting(this)">
+</div>
+
+</div>
+
+
+<button
+class="popup-button"
+onclick="resetGame()">
+🔄 RESET GAME
+</button>
+
+
+<button
+class="popup-button"
+onclick="closeSettings()">
+
+CLOSE
+
+</button>
+
+
+</div>
+
+</div>
+
+
+<!-- =========================
+INFORMATION POPUP
+========================= -->
+
+<div
+class="popup-overlay"
+id="infoPopup">
+
+
+<div class="popup">
+
+
+<button
+class="close-button"
+onclick="closeInfo()">
+
+×
+
+</button>
+
+
+<h2
+class="info-title"
+id="infoTitle">
+</h2>
+
+
+<div id="infoContent">
+</div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+
+function openSettings(){
+
+document
+.getElementById("settingsPopup")
+.classList
+.add("show");
+
+}
+
+
+function closeSettings(){
+
+document
+.getElementById("settingsPopup")
+.classList
+.remove("show");
+
+}
+
+
+function outsideClose(event){
+
+if(
+event.target.id === "settingsPopup"
+){
+
+closeSettings();
+
+}
+
+}
+
+
+function toggleSetting(element){
+
+element
+.classList
+.toggle("active");
+
+}
+
+
+function toggleFullscreen(element){
+
+element
+.classList
+.toggle("active");
+
+
+if(!document.fullscreenElement){
+
+document
+.documentElement
+.requestFullscreen()
+.catch(function(){
+
+element
+.classList
+.remove("active");
+
+});
+
+}
+
+else{
+
+document.exitFullscreen();
+
+}
+
+}
+
+
+/* =========================
+START BUTTON
+========================= */
+
+function startGame(){
+
+window.location.href="start.html";
+
+}
+
+
+function resetGame(){
+
+if(window.PandyaWallet){
+PandyaWallet.reset();
+}
+
+alert("Game has been reset!");
+
+}
+
+
+function showInfo(title,content){
+
+document
+.getElementById("infoTitle")
+.innerText=title;
+
+
+document
+.getElementById("infoContent")
+.innerHTML=content;
+
+
+document
+.getElementById("infoPopup")
+.classList
+.add("show");
+
+}
+
+
+function closeInfo(){
+
+document
+.getElementById("infoPopup")
+.classList
+.remove("show");
+
+}
+
+
+/* =========================
+HEROES
+========================= */
+
+function openHeroes(){
+
+showInfo(
+
+"⚔️ PANDYA HEROES",
+
+`
+
+<div class="info-card">
+
+<h3>⚔️ Warrior</h3>
+
+<p>
+Brave warriors who protect the Pandya kingdom.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>🛡️ Royal Guard</h3>
+
+<p>
+Elite soldiers who protect the king and the royal palace.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>🏹 Archer</h3>
+
+<p>
+Skilled warriors who defend the kingdom.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>👑 King</h3>
+
+<p>
+The ruler of the mighty Pandya kingdom.
+</p>
+
+</div>
+
+`
+
+);
+
+}
+
+
+/* =========================
+QUESTS
+========================= */
+
+function openQuests(){
+
+showInfo(
+
+"📜 QUESTS",
+
+`
+
+<div class="info-card">
+
+<h3>Quest 1</h3>
+
+<p>
+Enter the ancient Pandya kingdom.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>Quest 2</h3>
+
+<p>
+Defend the kingdom from enemy warriors.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>Quest 3</h3>
+
+<p>
+Protect the people of Madurai.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>Quest 4</h3>
+
+<p>
+Reach the royal palace and meet the Pandya king.
+</p>
+
+</div>
+
+`
+
+);
+
+}
+
+
+/* =========================
+ACHIEVEMENTS
+========================= */
+
+function openAchievements(){
+
+showInfo(
+
+"🏆 ACHIEVEMENTS",
+
+`
+
+<div class="info-card">
+
+<h3>🥇 First Victory</h3>
+
+<p>
+Complete your first mission.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>⚔️ Brave Warrior</h3>
+
+<p>
+Complete 10 battles.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>🛡️ Kingdom Defender</h3>
+
+<p>
+Protect the Pandya kingdom.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>👑 Royal Champion</h3>
+
+<p>
+Reach the royal rank.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>🏆 Legendary Hero</h3>
+
+<p>
+Complete 50 missions.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>🐟 Pandya Legend</h3>
+
+<p>
+Complete the main story.
+</p>
+
+</div>
+
+`
+
+);
+
+}
+
+
+/* =========================
+LEADERBOARD
+========================= */
+
+function openLeaderboard(){
+
+showInfo(
+
+"👑 LEADERBOARD",
+
+`
+
+<div class="info-card">
+
+<h3>🥇 Warrior King</h3>
+
+<p>
+Level 50 • 98,500 XP
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>🥈 Pandya Hero</h3>
+
+<p>
+Level 45 • 85,200 XP
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>🥉 Tamil Warrior</h3>
+
+<p>
+Level 40 • 72,800 XP
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>🏅 Royal Guard</h3>
+
+<p>
+Level 35 • 65,400 XP
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3>🏅 Madurai Hero</h3>
+
+<p>
+Level 30 • 54,700 XP
+</p>
+
+</div>
+
+`
+
+);
+
+}
+
+</script>
+
+<script src="wallet.js"></script>
+
+
+</body>
+
+</html>

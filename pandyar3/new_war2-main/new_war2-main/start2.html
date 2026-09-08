@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Nedunchezhiyan I - Page 5</title>
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+
+        body {
+            background: #080604;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            overflow: hidden;
+        }
+
+        .fifth-page {
+
+            position: relative;
+
+            width: 100%;
+            height: 100vh;
+
+            height: 100svh;
+
+            background-image: url("bg3.jpeg");
+
+            background-repeat: no-repeat;
+
+            background-position: center center;
+
+            background-size: cover;
+
+            overflow: hidden;
+        }
+        .bottom-gradient {
+
+            position: absolute;
+
+            left: 0;
+            bottom: 0;
+
+            width: 100%;
+            height: 180px;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, 0),
+                    rgba(0, 0, 0, 0.95)
+                );
+
+            pointer-events: none;
+
+            z-index: 5;
+        }
+
+        .navigation {
+
+            position: absolute;
+
+            left: 0;
+            bottom: 0;
+
+            width: 100%;
+
+            min-height: 95px;
+
+            padding:
+                15px
+                30px
+                22px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            z-index: 20;
+        }
+
+
+        .nav-button {
+
+            min-width: 155px;
+
+            padding:
+                13px
+                30px;
+
+            border: 2px solid #d4a64a;
+
+            border-radius: 8px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #6b401d,
+                    #241209
+                );
+
+            color: #f5d58a;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            letter-spacing: 2px;
+
+            text-align: center;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 0 8px
+                rgba(212, 166, 74, 0.55),
+
+                inset 0 0 8px
+                rgba(255, 220, 140, 0.15);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+
+            outline: none;
+        }
+        .nav-button:hover {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #875126,
+                    #3a1e0d
+                );
+
+            color: #fff0b8;
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 0 18px
+                rgba(212, 166, 74, 0.9),
+
+                inset 0 0 10px
+                rgba(255, 220, 140, 0.2);
+        }
+
+        .nav-button:active {
+
+            transform:
+                scale(0.95);
+
+            box-shadow:
+                0 0 7px
+                rgba(212, 166, 74, 0.6);
+        }
+        #backButton {
+
+            margin-left: 5px;
+        }
+        #nextButton {
+
+            margin-right: 5px;
+        }
+        @media (max-width: 600px) {
+
+            .navigation {
+
+                min-height: 85px;
+
+                padding:
+                    12px
+                    15px
+                    18px;
+            }
+
+
+            .nav-button {
+
+                min-width: 125px;
+
+                padding:
+                    11px
+                    20px;
+
+                font-size: 15px;
+
+                letter-spacing: 1.5px;
+            }
+        }
+        @media (max-width: 380px) {
+
+            .navigation {
+
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+
+            .nav-button {
+
+                min-width: 110px;
+
+                padding:
+                    10px
+                    15px;
+
+                font-size: 14px;
+            }
+        }
+        @media (min-width: 601px)
+               and (max-width: 1000px) {
+
+            .nav-button {
+
+                min-width: 145px;
+
+                font-size: 17px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+    <div class="fifth-page">
+        <div class="bottom-gradient"></div>
+        <div class="navigation">
+            <button
+                id="backButton"
+                class="nav-button"
+                type="button">
+                BACK
+            </button>
+            <button
+                id="nextButton"
+                class="nav-button"
+                type="button">
+                NEXT
+            </button>
+        </div>
+    </div>
+    <script>
+        const backButton =
+            document.getElementById("backButton");
+        const nextButton =
+            document.getElementById("nextButton");
+
+        backButton.addEventListener(
+            "click",
+            function () {
+
+                window.location.href = "start.html";
+
+            }
+        );
+        nextButton.addEventListener(
+            "click",
+            function () {
+
+                window.location.href =
+                    "showlevel.html";
+
+            }
+        );
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+
+                if (event.key === "ArrowLeft") {
+
+                    window.location.href =
+                        "start.html";
+
+                }
+
+
+                if (event.key === "ArrowRight") {
+
+                    window.location.href =
+                        "showlevel.html";
+
+                }
+
+            }
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>

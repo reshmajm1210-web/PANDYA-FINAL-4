@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading - Pandya Empire of Warriors</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        body {
+            background: url("bg.jpeg") center center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Dark Overlay */
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+        }
+
+        /* Loading Box */
+        .loading-box {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .logo {
+            color: #FFD76B;
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            text-shadow: 0 0 15px #ffb300;
+            margin-bottom: 15px;
+        }
+
+        .subtitle {
+            color: #f5deb3;
+            font-size: 18px;
+            letter-spacing: 2px;
+            margin-bottom: 35px;
+        }
+
+        /* Loading Bar */
+        .loading-container {
+            width: 100%;
+            height: 18px;
+            border: 2px solid #FFD76B;
+            border-radius: 30px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 15px rgba(255,215,0,.3);
+        }
+
+        .loading-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(to right,#8B5A00,#FFD700,#FFF4A5,#FFD700);
+            animation: loading 5s linear forwards;
+        }
+
+        @keyframes loading {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        /* Loading Text */
+        .loading-text {
+            color: white;
+            font-size: 20px;
+            margin-top: 25px;
+            letter-spacing: 2px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%,100% { opacity: 1; }
+            50% { opacity: .4; }
+        }
+
+        /* Bottom Quote */
+        .quote {
+            margin-top: 35px;
+            color: #FFD76B;
+            font-size: 16px;
+            font-style: italic;
+        }
+
+        /* Mobile */
+        @media(max-width:600px){
+
+            .logo{
+                font-size:34px;
+            }
+
+            .subtitle{
+                font-size:15px;
+            }
+
+            .loading-text{
+                font-size:17px;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="loading-box">
+
+        <div class="logo">PANDYA EMPIRE</div>
+
+        <div class="subtitle">EMPIRE OF WARRIORS</div>
+
+        <div class="loading-container">
+            <div class="loading-bar"></div>
+        </div>
+
+        <div class="loading-text">
+            Entering the Pandya Kingdom...
+        </div>
+
+        <div class="quote">
+            "Prepare yourself for the Kingdom Path."
+        </div>
+
+    </div>
+
+    <script>
+
+        // Automatically open the 3D Kingdom Map after 5 seconds
+        setTimeout(function () {
+            window.location.href = "task.html";
+        }, 5000);
+
+    </script>
+
+</body>
+
+</html>
